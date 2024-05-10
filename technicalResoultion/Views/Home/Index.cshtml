@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5">
+    @if (Context.User.Identity.IsAuthenticated)
+    {
+        <h3>Bienvenido @User.Identity.Name</h3>
+    }
+
+    <br />
+
+    <a asp-controller="Login" asp-action="Logout" class="form-control">Cerrar Sesion</a>
+</div>
