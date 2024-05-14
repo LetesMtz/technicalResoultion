@@ -1,0 +1,53 @@
+﻿/* styles.css */
+body {
+    font-family: Montserrat;
+}
+
+.estadisticas{
+    margin-top: 260px;
+}
+
+.tituloTicket{
+    font-family: Montserrat;
+}
+
+
+.ticket {
+    display: flex;
+    width: 300px; /* Ancho del ticket, ajusta según sea necesario */
+    height: 100px; /* Altura del ticket, ajusta según sea necesario */
+}
+
+.mitad-azul {
+    width: 40%;
+    background-color: #07464B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mitad-blanca {
+    width: 60%;
+    background-color: #10737B;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+    .mitad-blanca h1 {
+        font-size: 55px; /* Tamaño del número, ajusta según sea necesario */
+        margin-bottom: -4px; /* Margen inferior del número */
+        color: white;
+    }
+
+    .mitad-blanca p {
+        font-size: 18px; /* Tamaño del texto, ajusta según sea necesario */
+        margin: 0; /* Elimina el margen predeterminado del párrafo */
+        color: white;
+        line-height: 1; /* Reduce el espacio vertical entre las líneas */
+    }
+
+.estadisticas {
+    margin-top: 20px; /* Ajusta este valor según sea necesario */
+}

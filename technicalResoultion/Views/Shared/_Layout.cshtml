@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - technicalResoultion</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="@Url.Content("~/Content/estilo.css")" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/estilo.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/technicalResoultion.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&display=swap">
+    
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">technicalResoultion</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -25,10 +29,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                        </li>
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> *@
+        <header style="background-color: black; color: white; display: flex; align-items: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+            <div>
+                <img src="https://firebasestorage.googleapis.com/v0/b/dulcesabor-c6f5a.appspot.com/o/Recursos%2Fcd603c70-a39e-430d-abb5-f6785baa9eef.jpg?alt=media&token=30969403-aa97-4879-ad4f-ddb1a37b2980" alt="Logo" style="width: 128px;">
+            </div>
+            <div style="margin-left: 10px;">
+                <span style="font-size: 24px; font-weight: bold; font-family: Montserrat;">@ViewBag.Title</span>
+            </div>
+        </header>
+
+
+
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -36,11 +55,13 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="background-color:#010817; color: white !important; text-align: center; font-family: 'Amaranth', sans-serif;">
         <div class="container">
-            &copy; 2024 - technicalResoultion - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            Technical Resolution 2024 &copy Todos los derechos reservados
         </div>
     </footer>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
