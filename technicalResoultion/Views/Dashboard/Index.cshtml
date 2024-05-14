@@ -6,7 +6,7 @@
 <div class="container">
     <div class="estadisticas">
         <div class="tituloTicket">
-            <h4 style="font-family: Montserrat;"><b>ESTADÍSTICAS</b> DE LOS TICKETS</h4>
+            <h5 style="font-family: Montserrat;"><b>ESTADÍSTICAS</b> DE LOS TICKETS</h5>
         </div>
         <div class="tickets">
             <div class="ticket">
@@ -19,8 +19,129 @@
                 </div>
             </div>
 
+            <div class="ticket">
+                <div class="mitad-azul2">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/dulcesabor-c6f5a.appspot.com/o/Recursos%2FEn%20progreso.png?alt=media&token=70cba7f2-e421-48b3-9d81-d7f739f3091d" alt="Imagen" style="height: 90px;">
+                </div>
+                <div class="mitad-blanca2">
+                    <h1><b>67</b></h1>
+                    <p><b>En progreso</b></p>
+                </div>
+            </div>
+
+            <div class="ticket">
+                <div class="mitad-azul3">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/dulcesabor-c6f5a.appspot.com/o/Recursos%2FRealizado.png?alt=media&token=c7923039-ce1e-4d1b-8ec8-22c13e9dec3d" alt="Imagen" style="height: 90px;">
+                </div>
+                <div class="mitad-blanca3">
+                    <h1><b>12</b></h1>
+                    <p><b>Resueltos</b></p>
+                </div>
+            </div>
+
+            
+
         </div>
+
+        <div class="linea-tickets">
+            <hr style="border-color: black; border-style: solid; border-width: 1px;">
+        </div>
+
+        <div class="datosAbajo">
+            <div class="graficoDePastel">
+                <div class="tituloTicket">
+                    <h5 style="font-family: Montserrat;"><b>TENDENCIA</b> DE LOS TICKETS</h5>
+                </div>
+                <div class="graficoPastel">
+                    <canvas id="miGraficoPastel"></canvas>
+                </div>
+            </div>
+            <div class="contenedorDatosVarios">
+                <div class="tituloTicket">
+                    <h5 style="font-family: Montserrat;"><b>DATOS</b> VARIOS</h5>
+                </div>
+                
+                <div class="datosVarios">
+                    <div class="fila">
+                        <div class="columna">
+                            <p class="numero">25</p>
+                            <p class="texto"><strong>Tickets abiertos <br /></strong>durante este día</p>
+                        </div>
+                        <div class="columna">
+                            <p class="numero">03</p>
+                            <p class="texto"><strong>Empleados</strong><br />sin tickets asignados</p>
+                        </div>
+                    </div>
+                    <div class="fila">
+                        <div class="columna">
+                            <p class="numero">05</p>
+                            <p class="texto"><strong>Tickets resueltos</strong><br />durante este día</p>
+                        </div>
+                        <div class="columna">
+                            <p class="numero">45</p>
+                            <p class="texto"><strong>Empleados</strong><br />con tickets asignados</p>
+                        </div>
+                    </div>
+                    <div class="fila">
+                        <div class="columna2">
+                            <p style="line-height: 1.2; font-weight: 800;">
+                                <strong>Tiempo promedio de resolución:</strong><br>
+                                <span style="font-size: 25px;">3 días</span>
+                            </p>
+                        </div>
+                        <div class="columna2">
+                            <button type="button" class="btn btn-dark w-70">Informe de Tickets</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            
+        </div>
+        
+
+
 
     </div>
 
 </div>
+
+<div style="margin-top: 25px;">
+    <a href="@Url.Action("Index", "Home")" class="btn btn-dark">Volver</a>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('miGraficoPastel').getContext('2d');
+        var myPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Internet', 'Redes móviles', 'Cable'],
+                datasets: [{
+                    label: 'Porcentaje de Categorías',
+                    data: [70, 14, 16], // Los porcentajes de cada categoría
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)'
+                    ],
+                    hoverOffset: 4 // Espacio entre la porción y el cursor al pasar el mouse
+                }]
+            },
+            options: {
+                responsive: true,
+                cutout: '40%', // Tamaño del agujero en el centro (70% del radio)
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    }
+                }
+            }
+        });
+    });
+</script>

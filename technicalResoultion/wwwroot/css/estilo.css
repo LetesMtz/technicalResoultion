@@ -11,12 +11,28 @@ body {
     font-family: Montserrat;
 }
 
+.tickets{
+    display: flex;
+
+}
+
 
 .ticket {
     display: flex;
-    width: 300px; /* Ancho del ticket, ajusta según sea necesario */
+    width: 320px; /* Ancho del ticket, ajusta según sea necesario */
     height: 100px; /* Altura del ticket, ajusta según sea necesario */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajusta según sea necesario */
+    margin-right: 25px;
+    transition: transform 0.3s ease;
 }
+
+.ticket:hover {
+    transform: scale(1.1);
+}
+
+    .ticket:last-child {
+        margin-right: 0;
+    }
 
 .mitad-azul {
     width: 40%;
@@ -37,12 +53,78 @@ body {
 
     .mitad-blanca h1 {
         font-size: 55px; /* Tamaño del número, ajusta según sea necesario */
+        font-weight: 800; /* Peso de la fuente extra bold */
         margin-bottom: -4px; /* Margen inferior del número */
         color: white;
     }
 
     .mitad-blanca p {
         font-size: 18px; /* Tamaño del texto, ajusta según sea necesario */
+        font-weight: 800; /* Peso de la fuente extra bold */
+        margin: 0; /* Elimina el margen predeterminado del párrafo */
+        color: white;
+        line-height: 1; /* Reduce el espacio vertical entre las líneas */
+    }
+
+.mitad-azul2 {
+    width: 40%;
+    background-color: #75650B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mitad-blanca2 {
+    width: 60%;
+    background-color: #B8A01B;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+    .mitad-blanca2 h1 {
+        font-size: 55px; /* Tamaño del número, ajusta según sea necesario */
+        font-weight: 800; /* Peso de la fuente extra bold */
+        margin-bottom: -4px; /* Margen inferior del número */
+        color: white;
+    }
+
+    .mitad-blanca2 p {
+        font-size: 18px; /* Tamaño del texto, ajusta según sea necesario */
+        font-weight: 800; /* Peso de la fuente extra bold */
+        margin: 0; /* Elimina el margen predeterminado del párrafo */
+        color: white;
+        line-height: 1; /* Reduce el espacio vertical entre las líneas */
+    }
+
+.mitad-azul3 {
+    width: 40%;
+    background-color: #09542A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mitad-blanca3 {
+    width: 60%;
+    background-color: #158546;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+    .mitad-blanca3 h1 {
+        font-size: 55px; /* Tamaño del número, ajusta según sea necesario */
+        font-weight: 800; /* Peso de la fuente extra bold */
+        margin-bottom: -4px; /* Margen inferior del número */
+        color: white;
+    }
+
+    .mitad-blanca3 p {
+        font-size: 18px; /* Tamaño del texto, ajusta según sea necesario */
+        font-weight: 800; /* Peso de la fuente extra bold */
         margin: 0; /* Elimina el margen predeterminado del párrafo */
         color: white;
         line-height: 1; /* Reduce el espacio vertical entre las líneas */
@@ -51,3 +133,94 @@ body {
 .estadisticas {
     margin-top: 20px; /* Ajusta este valor según sea necesario */
 }
+
+.linea-tickets {
+    width: 1010px; /* Ajusta según sea necesario */
+}
+
+.grafico {
+    display: flex;
+    width: 320px; /* Ancho del ticket, ajusta según sea necesario */
+    height: 320px; /* Altura del ticket, ajusta según sea necesario */
+    margin-right: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajusta según sea necesario */
+}
+
+.graficoPastel canvas {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajusta según sea necesario */
+    margin-right: 25px;
+    transition: transform 0.3s ease;
+}
+
+.graficoPastel:hover canvas {
+    transform: scale(1.1);
+}
+/*
+.graficoPastel:last-child {
+    margin-right: 0;
+}*/
+
+.datosAbajo {
+    display: flex;
+}
+
+
+.datosVarios {
+    display: flex;
+    width: 665px; /* Ancho del ticket, ajusta según sea necesario */
+    height: 320px; /* Altura del ticket, ajusta según sea necesario */
+    margin-right: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajusta según sea necesario */
+    transition: transform 0.3s ease;
+    flex-direction: column;
+}
+
+
+    .datosVarios:hover {
+        transform: scale(1.06);
+    }
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.columna {
+    flex: 1;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: row; /* Cambiado a row para alinear el número y el texto horizontalmente */
+    align-items: center; /* Alinear verticalmente los elementos dentro de la columna */
+}
+
+.columna2 {
+    flex: 1;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column; /* Cambiado a row para alinear el número y el texto horizontalmente */
+    align-items: left; /* Alinear verticalmente los elementos dentro de la columna */
+}
+
+.numero {
+    font-size: 40px;
+    font-weight: 900; /* Peso de la fuente extra bold */
+}
+
+.texto {
+    font-size: 14px;
+    margin-left: 15px;
+    margin-top: 0px;
+    line-height: 1.2;
+    text-align: left; /* Añadido para centrar el texto */
+    white-space: normal; /* Permitir el salto de línea */
+    word-wrap: break-word; /* Permitir el corte de palabras en caso de ser necesario */
+}
+
+
+/*
+.graficoPastel:last-child {
+    margin-right: 0;
+}*/
