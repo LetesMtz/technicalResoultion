@@ -18,6 +18,12 @@ builder.Services.AddAuthentication(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//Inyectar la conexión
+//builder.Services.AddDbContext<TechResContext>(opt =>
+//    opt.UseSqlServer(builder.Configuration.GetConnectionString("TechResConnection")
+//    )
+//);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
