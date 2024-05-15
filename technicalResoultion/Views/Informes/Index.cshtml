@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="containerInformes" style="margin-top: 25px; display: flex; justify-content: space-between;">
+    <div class="Encabezado">
+        <h3 style="font-weight: 900;">Informe de tickets</h3>
+        <h6 style="margin-top: -10px;">Detalle de todos los tickets</h6>
+    </div>
+    <div>
+        <div class="filtrado">
+            <div class="filtrarPor" style="display: block">
+                Filtrar por:
+                <select class="comboBox">
+                    <option value="" disabled selected>Seleccione la categoría</option>
+                    <option value="categoria">Categoría</option>
+                    <option value="fecha">Fecha</option>
+                    <option value="empleado">Empleado</option>
+                </select>
+            </div>
+            <div class="buscarPor">
+                Buscar por:
+                <select class="comboBox">
+                    <option value="" disabled selected>Seleccione la categoría</option>
+                    <option value="categoria">Redes</option>
+                    <option value="fecha">Internet</option>
+                    <option value="empleado">Cable</option>
+                </select>
+                <!-- Aquí puedes agregar más elementos según tus necesidades -->
+            </div>
+            <div class="button">
+                <button type="button" class="btn btn-info">Buscar</button>
+            </div>
+        </div>
+            
+        </div>
+    </div>
+
+<div class="laTabla">
+    <table>
+        <thead>
+            <tr>
+                <th>N° TICKET</th>
+                <th>NOMBRE</th>
+                <th>FECHA</th>
+                <th>ENCARGADO</th>
+                <th>ESTADO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>001</b></td>
+                <td>Usuario 1</td>
+                <td>2024-05-14</td>
+                <td>Juan Pérez</td>
+                <td><span class="estado resuelto">Resuelto</span></td>
+            </tr>
+            <tr>
+                <td><b>002</b></td>
+                <td>Usuario 2</td>
+                <td>2024-05-15</td>
+                <td>María Rodríguez</td>
+                <td><span class="estado en-progreso">En progreso</span></td>
+            </tr>
+            <tr>
+                <td><b>003</b></td>
+                <td>Usuario 3</td>
+                <td>2024-05-16</td>
+                <td>Carlos López</td>
+                <td><span class="estado abierto">Abierto</span></td>
+            </tr>
+            <!-- Agrega más filas aquí según sea necesario -->
+        </tbody>
+    </table>
+</div>
+
+

@@ -219,6 +219,88 @@ body {
     word-wrap: break-word; /* Permitir el corte de palabras en caso de ser necesario */
 }
 
+.containerInformes {
+    display: flex;
+}
+
+
+.filtrado {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+/* Estilos para la sección de "Filtrar por" */
+.filtrarPor {
+    margin-right: 20px;
+    font-size: 12px;
+}
+
+/* Estilos para el comboBox */
+.comboBox {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+/* Estilos para la sección de "Buscar por" (si deseas agregar estilos) */
+.buscarPor {
+    margin-right: 20px;
+    font-size: 12px;
+}
+
+
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: black;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+.estado {
+    display: inline-block;
+    width: 60%;
+    text-align: center;
+    border-radius: 25px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.resuelto {
+    background-color: green;
+    color: white;
+}
+
+.en-progreso {
+    background-color: goldenrod;
+    color: white;
+}
+
+.abierto {
+    background-color: blue;
+    color: white;
+}
+
 
 /*
 .graficoPastel:last-child {
