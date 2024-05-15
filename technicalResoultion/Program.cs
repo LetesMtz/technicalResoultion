@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using technicalResoultion.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,10 +21,10 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllersWithViews();
 
 //Inyectar la conexión
-//builder.Services.AddDbContext<TechResContext>(opt =>
-//    opt.UseSqlServer(builder.Configuration.GetConnectionString("TechResConnection")
-//    )
-//);
+builder.Services.AddDbContext<TechResContext>(opt =>
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("TechResConnection")
+    )
+);
 
 var app = builder.Build();
 

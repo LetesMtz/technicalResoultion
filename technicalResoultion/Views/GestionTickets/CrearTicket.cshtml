@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "CREAR TICKETS";
+}
+
+<form asp-action="CreateTicket" method="post" enctype="multipart/form-data">
+    <div class="container d-flex justify-content-center mt-5 ">
+        <div>
+            <div>
+                <input type="text" name="id_usuario" id="id_usuario" value="@ViewBag.cliente">
+                <input type="text" class="form-control " placeholder="Nombre de la aplicación a reportar o servicio a solicitar" name="nombre_problema" id="nombre_problema">
+            </div>
+            <div class="mt-2">
+                <textarea class="form-control " placeholder="Explique el problema" name="descripcion" id="descripcion"></textarea>
+            </div>
+            <div class="mt-2">
+                <input type="file" class="form-control " name="archivo" id="archivo">
+            </div>
+            <div class="mt-2">
+                <select class="form-control " name="prioridad" id="prioridad">
+                    <option selected>Prioridad</option>
+                    @foreach (var item in (IEnumerable<dynamic>)ViewData["estadosPrioridad"])
+                    {
+                        @if(item.tipo_estado == "Prioridad")
+                        {
+                            <option value="@item.id_estado">@item.nombre</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="mt-2">
+                <input type="text" class="form-control " name="nombre_cliente" id="nombre_cliente" value="Nombre del cliente">
+            </div>
+            <div class="mt-2">
+                <input type="text" class="form-control " name="direccion" id="direccion" value="Dirección">
+            </div>
+            <div class="mt-2">
+                <input type="text" class="form-control " name="telefono" id="telefono" value="Teléfono">
+            </div>
+            <div class="mt-2 d-flex  justify-content-center ">
+                <input type="submit" class="form-control bg-primary text-light w-25 " value="Crear">
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="btnVolver d-flex position-fixed bottom-0 p-3 ">
+    <a href="./indexGestionDeTickets.html" class="form-control bg-black text-light text-decoration-none ">Volver</a>
+</div>

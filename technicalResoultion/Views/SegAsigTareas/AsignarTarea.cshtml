@@ -1,0 +1,77 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container mt-5 d-flex">
+    <div class="ms-5 ">
+        <div class="cabecera d-flex justify-content-between ">
+            <div class="titulo">
+                <h2 class="fw-bold">Tickets no asignados</h2>
+            </div>
+            <div class="botones d-flex ">
+                <div>
+                    <span>Filtrar por:</span>
+                    <select name="" id="" class="form-control">
+                        <option selected>Prioridad</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabla mt-4">
+            <table class="table table-striped ">
+                <thead>
+                    <tr class="table-dark">
+                        <th scope="col" style="width: 8vw; padding-left: 1.5vw;">N° TICKET</th>
+                        <th scope="col" style="width: 15vw;">NOMBRE</th>
+                        <th scope="col">PRIORIDAD</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script>
+                        for (i = 1; i < 5; i++) {
+                            document.write('<tr>');
+                            document.write('<th scope="row" style="padding-left: 1.5vw;">001234</th>');
+                            document.write('<td>Nombre que se le colocó en el formulario</td>');
+                            document.write('<td>Crítico</td>');
+                            document.write('<td><a href="#" class="text-decoration-none ">Seleccionar</a></td>');
+                            document.write('</tr>');
+                        }
+                    </script>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="ms-5 w-50 " style="margin-top: 5.7vw;">
+        <form action="" method="post">
+            <div>
+                <input type="text" class="form-control " placeholder="Número de Ticket" readonly>
+            </div>
+            <div class="mt-2 ">
+                <input type="text" class="form-control " placeholder="Tarea">
+            </div>
+            <div class="mt-2 ">
+                <select class="form-control " name="" id="">
+                    <option selected>Se le asigna a...</option>
+                </select>
+            </div>
+            <div class="mt-2 ">
+                <a href="#" class="ms-3 ">Añadir tarea</a>
+            </div>
+            <div class="mt-2 ">
+                <a href="#" class="form-control ">Añadir tarea</a>
+            </div>
+            <div class="mt-2 ">
+                <input type="submit" class="btn btn-primary " value="Añadir tareas">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="btnVolver d-flex position-fixed bottom-0 p-3 ">
+    <a href="./SeguimientoAsignacionTareas.html" class="form-control bg-black text-light text-decoration-none ">Volver</a>
+</div>

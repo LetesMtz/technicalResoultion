@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "GESTIÓN DE TICKETS";
+}
+
+<div class="container mt-5">
+    <div class="cabecera d-flex justify-content-between ">
+        <div class="titulo">
+            <h2 class="fw-bold">Tickets creados</h2>
+        </div>
+        <div class="botones d-flex ">
+            <div>
+                <span>Filtrar por:</span>
+                <select name="" id="" class="form-control">
+                    <option selected>Categoria</option>
+                </select>
+            </div>
+            <div class="ms-5 mt-4 h-100 ">
+                <a asp-action="CrearTicket" class="form-control bg-primary text-light text-decoration-none fw-bold">Crear ticket</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabla mt-4">
+        <table class="table table-striped ">
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col" style="width: 8vw; padding-left: 1.5vw;">N° TICKET</th>
+                    <th scope="col" style="width: 40vw;">NOMBRE</th>
+                    <th scope="col">PRIORIDAD</th>
+                    <th scope="col">CATEGORÍA</th>
+                    <th scope="col">FECHA</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (IEnumerable<dynamic>)ViewData["tickets"])
+                {
+                    <tr>
+                        <th scope="row" style="padding-left: 1.5vw;">@item.id</th>
+                        <td>@item.nombre</td>
+                        <td>@item.prioridad</td>
+                        <td>@item.categoria</td>
+                        <td>@item.fecha</td>
+                        <td><a href="#" class="text-decoration-none ">Detalles</a></td>
+                    </tr>
+                }
+                @* <script>
+                    for (i = 1; i < 8; i++) {
+                        document.write('<tr>');
+                        document.write('<th scope="row" style="padding-left: 1.5vw;">001234</th>');
+                        document.write('<td>Nombre que se le colocó en el formulario</td>');
+                        document.write('<td>Crítico</td>');
+                        document.write('<td>Infraestructura</td>');
+                        document.write('<td>2024-05-14</td>');
+                        document.write('<td><a href="#" class="text-decoration-none ">Detalles</a></td>');
+                        document.write('</tr>');
+                    } *@
+                </script>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="btnVolver d-flex position-fixed bottom-0 p-3 ">
+    <a href="#" class="form-control bg-black text-light text-decoration-none ">Volver</a>
+</div>
