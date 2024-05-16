@@ -3,5 +3,25 @@
 *@
 @{
 }
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif; /* Aplica Montserrat a todo el cuerpo */
+    }
 
-<a asp-controller="Login" asp-action="Login" class="form-control">Iniciar Sesion con Google</a>
+</style>
+
+<div class="container my-3">
+    <div class="text-center">
+        <h1>Bienvenido a Technical Resolution</h1>
+        <p>Por favor inicie sesión con:</p>
+        <div>
+            <img src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png" class="mb-3" style="width: 100px; height: auto;">
+        </div>
+        <a asp-controller="Login" asp-action="Login" class="btn btn-info">Iniciar Sesión con Google</a>
+       
+        
+    </div>
+</div>
+<br><br><br><br><br>
+<div class="d-flex justify-content-evenly"><p class="mt-3">Si aún no te has registrado puedes hacerlo aquí: <a href="#" class="btn btn-info">Registrar</a></p></div>
+@* <a asp-controller="Login" asp-action="Login" class="form-control">Iniciar Sesion con Google</a> *@
