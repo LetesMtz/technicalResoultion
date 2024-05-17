@@ -2,34 +2,39 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    
 }
 
 <div class="container mt-5 me-5 ">
     <div>
         <h2 class="fw-bold ">Detalles del ticket</h2>
     </div>
-    <div class="d-flex ">
-        <div>
-            <h5 class="fw-bold ">Nombre del ticket:</h5>
-            <h5 class="fw-bold ">Nombre colocado en el formulario</h5>
+    @{
+        int id = 0;
+    }
+    @foreach (var item in ViewBag.Tickets)
+    {
+        <div class="d-flex ">
+            <div>
+                <h5 class="fw-bold ">Nombre del ticket:</h5>
+                <h5 class="fw-bold ">@item.nombre</h5>
+            </div>
+            <div class="ms-5 ">
+                <h5 class="fw-bold ">Número del ticket:</h5>
+                <h5 class="fw-bold ">#@item.id</h5>
+            </div>
+            <div class="ms-5 ">
+                <h5 class="fw-bold ">Archivo adjunto:</h5>
+                <a href="@item.archivo" class="fw-bold ">Ver archivo</a>
+            </div>
         </div>
-        <div class="ms-5 ">
-            <h5 class="fw-bold ">Número del ticket:</h5>
-            <h5 class="fw-bold ">#001234</h5>
+        <div class="mt-5 ">
+            <h5 class="fw-bold ">Descripción:</h5>
+            <p>
+                @item.descripcion
+            </p>
         </div>
-        <div class="ms-5 ">
-            <h5 class="fw-bold ">Archivo adjunto:</h5>
-            <a href="" class="fw-bold ">Ver archivo</a>
-        </div>
-    </div>
-    <div class="mt-5 ">
-        <h5 class="fw-bold ">Descripción:</h5>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis possimus repellat placeat a asperiores
-            molestiae atque sapiente quibusdam iure quam. Quam excepturi nemo ratione distinctio eligendi! Commodi
-            error delectus debitis!
-        </p>
-    </div>
+    }
 </div>
 
 <div class="container mt-5 me-5 ">
@@ -49,48 +54,52 @@
                 </tr>
             </thead>
             <tbody>
-                <script>
-                    for (i = 1; i < 6; i++) {
-                        document.write('<tr>');
-                        document.write('<th scope="row" style="padding-left: 1.5vw;">001234</th>');
-                        document.write('<td>Nombre que se le colocó en el formulario</td>');
-                        document.write('<td>Crítico</td>');
-                        document.write('</tr>');
-                    }
-                </script>
+                @foreach(var item in ViewBag.tareas)
+                {
+                    <tr>
+                        <th scope="row" style="padding-left: 1.5vw;">@item.id</th>
+                        <td>@item.nombre</td>
+                        <td>@item.progreso</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
 </div>
 
 <div class="container mt-5 me-5 ">
-    <form action="" method="post">
+    <form asp-action="CreateComentario" method="post">
         <div>
+            @foreach (var item in ViewBag.Tickets)
+            {
+                <input type="hidden" name="id_ticket" id="id_ticket" value="@item.id" />
+            }
             <h2 class="fw-bold ">Comentarios</h2>
-            <textarea class="form-control " name="" id="" placeholder="Escriba su comentario..."></textarea>
+            <textarea class="form-control " name="comentario" id="comentario" placeholder="Escriba su comentario..."></textarea>
         </div>
         <div class="d-flex justify-content-end mt-3 ">
             <input type="submit" value="Añadir comentario" class="btn btn-primary ">
         </div>
     </form>
     <hr>
-    <div class="comentarios p-3 mb-4" style="background-color: #E6E6E6;">
-        <div class="d-flex justify-content-between ">
-            <div>
-                <span class="fw-bold ">Nombre de la persona</span>
+        @foreach(var item in ViewBag.Comentarios)
+        {
+            <div class="comentarios p-3 mb-3" style="background-color: #E6E6E6;">
+                <div class="d-flex justify-content-between ">
+                    <div>
+                        <span class="fw-bold ">@item.nombres @item.apellidos - @item.rol</span>
+                    </div>
+                    <div>
+                        <span class="fw-bold ">@item.fecha</span>
+                    </div>
+                </div>
+                <div>
+                    <p>
+                        @item.comentario
+                    </p>
+                </div>
             </div>
-            <div>
-                <span class="fw-bold ">Fecha</span>
-            </div>
-        </div>
-        <div>
-            <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis placeat natus quos
-                quo facere iure harum culpa voluptate? Explicabo expedita recusandae quas doloremque
-                alias nesciunt dolorum delectus suscipit harum eius!s
-            </p>
-        </div>
-    </div>
+        }
 </div>
 
 <div class="btnVolver d-flex position-fixed bottom-0 p-3 ">

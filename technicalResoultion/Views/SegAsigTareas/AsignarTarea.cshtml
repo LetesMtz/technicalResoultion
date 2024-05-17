@@ -2,7 +2,72 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewBag.Title = "ASIGNAR TAREA";
 }
+
+<script>
+    function addTarea()
+    {
+        var tarea = document.querySelector("#tarea").value;
+        var encargado = document.querySelector("#encargado").value;
+
+        var area = document.querySelector("#tare_area");
+        
+        if (encargado > 0)
+        {
+            area.append(tarea + "," + encargado + ";");
+        }
+    }
+    // function ticketSeleccionado() {
+    //     var i = 1;
+    //     var it = 4;
+    // while (true)
+    // {
+    // document.getElementById("seleccionar_" + i).addEventListener("click",
+    //     function () {
+    //         var ticket = document.getElementById("id_ticket_area_" + i).value;
+    //         document.querySelector("#id_ticket").value = ticket;
+    //         break;
+    //     });
+
+    // if (document.getElementById("seleccionar_" + i).onclick == true)
+    // {
+    //     var ticket = document.getElementById("id_ticket_area_" + i).value;
+    //     document.querySelector("#id_ticket").value = ticket;
+    //     break;
+    // }
+
+    // const boton = document.querySelector("#botonSeleccionar");
+
+    // boton.addEventListener("click",
+    //     function() {
+    //         var celda = document.getElementsByTagName("th");
+    //         var ticket = celda[4].innerHTML;
+    //         document.querySelector("#id_ticket").value = ticket;
+    //         break;
+    //     }
+    // );
+
+    // if (document.getElementById("seleccionar_" + i).onclick == true) {
+    //     var celda = document.getElementsByTagName("th");
+    //     var ticket = celda[it].innerHTML;
+    //     document.querySelector("#id_ticket").value = ticket;
+    //     break;
+    // }
+
+    // var boton = document.getElementById('seleccionar_1');
+
+    // boton.addEventListener('click', function () {
+    //     var celda = document.getElementsByTagName("th");
+    //     var ticket = celda[it].innerHTML;
+    //     document.querySelector("#id_ticket").value = ticket;
+    // });
+
+    //     i++;
+    //     it++;
+    // }
+    // }
+</script>
 
 <div class="container mt-5 d-flex">
     <div class="ms-5 ">
@@ -31,39 +96,50 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <script>
-                        for (i = 1; i < 5; i++) {
-                            document.write('<tr>');
-                            document.write('<th scope="row" style="padding-left: 1.5vw;">001234</th>');
-                            document.write('<td>Nombre que se le colocó en el formulario</td>');
-                            document.write('<td>Crítico</td>');
-                            document.write('<td><a href="#" class="text-decoration-none ">Seleccionar</a></td>');
-                            document.write('</tr>');
+                    @{var iter = 1;}
+                    @foreach (var item in ViewBag.Tickets)
+                    {
+                        @if (@item.progreso == "En Espera")
+                        {
+
+                            <tr>
+                                <th scope="row" style="padding-left: 1.5vw;">@item.id</th>
+                                <td>@item.nombre</td>
+                                <td>@item.prioridad</td>
+                                <td><a href="#" id="seleccionar_@iter" onclick="ticketSeleccionado()">Seleccionar</a></td>
+                            </tr>
+                            { iter++; }
                         }
-                    </script>
+                    }
                 </tbody>
             </table>
         </div>
     </div>
 
     <div class="ms-5 w-50 " style="margin-top: 5.7vw;">
-        <form action="" method="post">
+        <form asp-action="CreateTarea" method="post">
             <div>
-                <input type="text" class="form-control " placeholder="Número de Ticket" readonly>
+                <input type="text" class="form-control " placeholder="Número de Ticket" id="id_ticket" name="id_ticket" value="4" readonly>
             </div>
             <div class="mt-2 ">
-                <input type="text" class="form-control " placeholder="Tarea">
+                <input type="text" class="form-control " placeholder="Tarea" id="tarea">
             </div>
             <div class="mt-2 ">
-                <select class="form-control " name="" id="">
+                <select class="form-control " name="encargado" id="encargado">
                     <option selected>Se le asigna a...</option>
+                    @foreach(var item in ViewBag.Internos)
+                    {
+                        <option value="@item.id">@item.nombres @item.apellidos - @item.rol</option>
+                    }
                 </select>
             </div>
             <div class="mt-2 ">
-                <a href="#" class="ms-3 ">Añadir tarea</a>
+                <a href="#" class="ms-3 " onclick="addTarea()">Añadir tarea</a>
             </div>
             <div class="mt-2 ">
-                <a href="#" class="form-control ">Añadir tarea</a>
+                <a href="#" class="form-control ">Ver tarea añadidas</a>
+
+                <textarea class="form-control" id="tare_area" name="tare_area" readonly></textarea>
             </div>
             <div class="mt-2 ">
                 <input type="submit" class="btn btn-primary " value="Añadir tareas">

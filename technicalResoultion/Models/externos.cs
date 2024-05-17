@@ -17,7 +17,5 @@ namespace technicalResoultion.Models
         public string? direccion { get; set; }
         public int? telefono { get; set; }
         public int? id_estado { get; set; }
-
-        public static string? nombre_externo_static { get; set; }
     }
 }

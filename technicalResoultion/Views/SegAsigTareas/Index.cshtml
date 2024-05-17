@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewBag.Title = "SEGUIMIENTO Y ASIGNACIÓN DE TAREAS";
 }
 
 <div class="btnVolver d-flex position-fixed bottom-0 p-3 ">
@@ -24,7 +25,7 @@
 <div class="container mt-5 me-5 ">
     <div class="cabecera d-flex justify-content-between ">
         <div class="titulo">
-            <h2 class="fw-bold">Tickets creados</h2>
+            <h2 class="fw-bold">Tickets asignados</h2>
             <h4 class="fw-bold">Tickets en progreso</h4>
         </div>
         <div class="botones d-flex ">
@@ -49,17 +50,19 @@
                 </tr>
             </thead>
             <tbody>
-                <script>
-                    for (i = 1; i < 6; i++) {
-                        document.write('<tr>');
-                        document.write('<th scope="row" style="padding-left: 1.5vw;">001234</th>');
-                        document.write('<td>Nombre que se le colocó en el formulario</td>');
-                        document.write('<td>Crítico</td>');
-                        document.write('<td><span class="estadoTabla">En progreso</span></td>');
-                        document.write('<td><a asp-action="TareasYComentarios" class="text-decoration-none ">Detalles</a></td>');
-                        document.write('</tr>');
+                @foreach (var item in ViewBag.Tickets)
+                {
+                    @if(@item.progreso == "En Progreso")
+                    {
+                        <tr>
+                            <th scope="row" style="padding-left: 1.5vw;">@item.id</th>
+                            <td>@item.nombre</td>
+                            <td>@item.prioridad</td>
+                            <td><span class="estadoTabla">@item.progreso</span></td>
+                            <td>@Html.ActionLink("Detalles", "TareasYComentarios", "SegAsigTareas", new { id = item.id })</td>
+                        </tr>
                     }
-                </script>
+                }
             </tbody>
         </table>
     </div>
@@ -93,17 +96,19 @@
                 </tr>
             </thead>
             <tbody>
-                <script>
-                    for (i = 1; i < 6; i++) {
-                        document.write('<tr>');
-                        document.write('<th scope="row" style="padding-left: 1.5vw;">001234</th>');
-                        document.write('<td>Nombre que se le colocó en el formulario</td>');
-                        document.write('<td>Crítico</td>');
-                        document.write('<td><span class="estadoTabla">En progreso</span></td>');
-                        document.write('<td><a href="#" class="text-decoration-none ">Detalles</a></td>');
-                        document.write('</tr>');
+                @foreach (var item in ViewBag.Tickets)
+                {
+                    @if (@item.progreso == "En Espera")
+                    {
+                        <tr>
+                            <th scope="row" style="padding-left: 1.5vw;">@item.id</th>
+                            <td>@item.nombre</td>
+                            <td>@item.prioridad</td>
+                            <td><span class="estadoTabla">@item.progreso</span></td>
+                            <td>@Html.ActionLink("Detalles", "TareasYComentarios", "SegAsigTareas", new { id = item.id })</td>
+                        </tr>
                     }
-                </script>
+                }
             </tbody>
         </table>
     </div>

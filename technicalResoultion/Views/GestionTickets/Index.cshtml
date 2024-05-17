@@ -27,21 +27,35 @@
                     <th scope="col" style="width: 8vw; padding-left: 1.5vw;">N° TICKET</th>
                     <th scope="col" style="width: 40vw;">NOMBRE</th>
                     <th scope="col">PRIORIDAD</th>
-                    <th scope="col">CATEGORÍA</th>
+                    <th scope="col">PROGRESO</th>
+                    @if (ViewBag.tipo_usuario != "Externo")
+                    {
+                        <th scope="col">CATEGORÍA</th>
+                    }
                     <th scope="col">FECHA</th>
-                    <th scope="col"></th>
+                    @if (ViewBag.tipo_usuario != "Externo")
+                    {
+                        <th scope="col"></th>
+                    }
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in (IEnumerable<dynamic>)ViewData["tickets"])
                 {
                     <tr>
-                        <th scope="row" style="padding-left: 1.5vw;">@item.id</th>
+                        <th scope="row" style="padding-left: 1.5vw; color: black;">@item.id</th>
                         <td>@item.nombre</td>
                         <td>@item.prioridad</td>
-                        <td>@item.categoria</td>
+                        <td>@item.progreso</td>
+                        @if (ViewBag.tipo_usuario != "Externo")
+                        {
+                            <td>@item.categoria</td>
+                        }
                         <td>@item.fecha</td>
-                        <td><a href="#" class="text-decoration-none ">Detalles</a></td>
+                        @if (ViewBag.tipo_usuario != "Externo")
+                        {
+                            <td><a href="#" class="text-decoration-none ">Detalles</a></td>
+                        }
                     </tr>
                 }
                 @* <script>

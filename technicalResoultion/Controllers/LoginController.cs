@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using technicalResoultion.Models;
+using technicalResoultion.Data;
 
 namespace technicalResoultion.Controllers
 {
@@ -17,6 +18,39 @@ namespace technicalResoultion.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.User.Identity.IsAuthenticated) 
+            {
+                var cliente = (from c in _TechResContext.externos
+                               select c).ToList();
+
+                bool confirm = false;
+
+                foreach (var item in cliente)
+                {
+                    string nombre_completo = item.nombres_e + " " + item.apellidos_e;
+                    if (nombre_completo.Equals(HttpContext.User.Identity.Name))
+                    {
+                        confirm = true;
+                        break;
+                    }
+                }
+
+                if (confirm)
+                {
+                    Session.nombre_usuario = HttpContext.User.Identity.Name;
+                    Session.tipo_usuario = "Externo";
+                    //ViewBag.usuario = result.Principal.Identity.Name;
+                    return RedirectToAction("Index", "GestionTickets", new { area = "" });
+                }
+                else
+                {
+                    Session.nombre_usuario = "";
+                    Session.tipo_usuario = "";
+                    return View();
+
+                }
+            }
+
             return View();
         }
 
@@ -58,13 +92,14 @@ namespace technicalResoultion.Controllers
 
             if(confirm)
             {
-                externos.nombre_externo_static = result.Principal.Identity.Name;
+                Session.nombre_usuario = "";
+                Session.tipo_usuario = "";
                 //ViewBag.usuario = result.Principal.Identity.Name;
                 return RedirectToAction("Index", "GestionTickets", new { area = "" });
             }
             else
             {
-                return RedirectToAction("Index", "Home", new { area = "" });
+                return View("Index");
 
             }
 

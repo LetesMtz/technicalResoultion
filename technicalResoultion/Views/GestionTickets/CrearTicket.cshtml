@@ -9,7 +9,7 @@
     <div class="container d-flex justify-content-center mt-5 ">
         <div>
             <div>
-                <input type="text" name="id_usuario" id="id_usuario" value="@ViewBag.cliente">
+                <input type="hidden" name="id_usuario" id="id_usuario" value="@ViewBag.id_cliente">
                 <input type="text" class="form-control " placeholder="Nombre de la aplicación a reportar o servicio a solicitar" name="nombre_problema" id="nombre_problema">
             </div>
             <div class="mt-2">
@@ -31,13 +31,13 @@
                 </select>
             </div>
             <div class="mt-2">
-                <input type="text" class="form-control " name="nombre_cliente" id="nombre_cliente" value="Nombre del cliente">
+                <input type="text" class="form-control " name="nombre_cliente" id="nombre_cliente" value="@ViewBag.nombre_cliente" readonly>
             </div>
             <div class="mt-2">
-                <input type="text" class="form-control " name="direccion" id="direccion" value="Dirección">
+                <input type="text" class="form-control " name="direccion" id="direccion" value="@ViewBag.direccion_cliente" readonly>
             </div>
             <div class="mt-2">
-                <input type="text" class="form-control " name="telefono" id="telefono" value="Teléfono">
+                <input type="text" class="form-control " name="telefono" id="telefono" value="@ViewBag.telefono_cliente" readonly>
             </div>
             <div class="mt-2 d-flex  justify-content-center ">
                 <input type="submit" class="form-control bg-primary text-light w-25 " value="Crear">
