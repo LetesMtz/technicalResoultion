@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Numerics;
 using technicalResoultion.Data;
 using technicalResoultion.Models;
+using System.Text.Json;
 
 namespace technicalResoultion.Controllers
 {
@@ -110,7 +111,7 @@ namespace technicalResoultion.Controllers
                                 nombre = t.nombre_problema,
                                 archivo = t.archivos,
                                 descripcion = t.descripcion,
-                                estado = e.nombre
+                                prioridad = e.nombre
                             }).ToList();
             ViewBag.Tickets = detalles;
 
@@ -151,10 +152,12 @@ namespace technicalResoultion.Controllers
 
         public IActionResult CreateComentario(int id_ticket, string comentario)
         {
+            var datosUsuario = JsonSerializer.Deserialize<internos>(HttpContext.Session.GetString("usuario"));
+
             comentarios com = new comentarios();
             com.comentario = comentario;
             com.id_ticket = id_ticket;
-            com.id_interno = 3;
+            com.id_interno = datosUsuario.id_interno;
 
             _TechResContext.comentarios.Add(com);
             _TechResContext.SaveChanges();

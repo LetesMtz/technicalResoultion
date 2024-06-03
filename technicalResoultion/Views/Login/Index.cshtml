@@ -18,6 +18,15 @@
             <img src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png" class="mb-3" style="width: 100px; height: auto;">
         </div>
         <a asp-controller="Login" asp-action="Login" class="btn btn-info">Iniciar Sesión con Google</a>
+
+        <hr>
+        <h2>Provicional (Login para externos con credenciales en base de datos)</h2>
+
+        <form asp-action="Login" method="post">
+            <input type="text" class="form-control" name="correo" id="correo" value="" placeholder="Correo Elecronico"/>
+            <input type="text" class="form-control" name="clave" id="clave" value="" placeholder="Contraseña" />
+            <input type="submit" class="btn btn-primary" value="Ingresar" />
+        </form>
        
         
     </div>
