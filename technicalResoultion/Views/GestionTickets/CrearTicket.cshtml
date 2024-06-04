@@ -4,6 +4,12 @@
 @{
     ViewBag.Title = "CREAR TICKETS";
 }
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif; /* Aplica Montserrat a todo el cuerpo */
+    }
+
+</style>
 
 <form asp-action="CreateTicket" method="post" enctype="multipart/form-data">
     <div class="container d-flex justify-content-center mt-5 ">
@@ -46,6 +52,6 @@
     </div>
 </form>
 
-<div class="btnVolver d-flex position-fixed bottom-0 p-3 ">
-    <a href="./indexGestionDeTickets.html" class="form-control bg-black text-light text-decoration-none ">Volver</a>
+<div>
+    <a asp-action="Index" class="btn btn-dark">Volver</a>
 </div>

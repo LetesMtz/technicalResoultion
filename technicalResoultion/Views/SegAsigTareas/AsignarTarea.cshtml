@@ -5,7 +5,12 @@
     ViewBag.Title = "ASIGNAR TAREA";
 }
 
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif; /* Aplica Montserrat a todo el cuerpo */
+    }
 
+</style>
 
 <div class="container mt-5 d-flex">
     <div class="ms-5 ">
@@ -69,9 +74,10 @@
                     }
                 </select>
             </div>
-            <div class="mt-2 ">
-                <a href="#" class="ms-3 " onclick="addTarea()">Añadir tarea</a>
+            <div class="mt-2">
+                <a href="#" class="ms-3" onclick="addTarea()" style="color: blue; font-weight: bold; text-decoration: none;">Añadir tarea</a>
             </div>
+
             <div class="mt-2 ">
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
@@ -130,6 +136,8 @@
     });
 </script>
 
-<div class="btnVolver d-flex position-fixed bottom-0 p-3 ">
-    <a href="./SeguimientoAsignacionTareas.html" class="form-control bg-black text-light text-decoration-none ">Volver</a>
+<div>
+    <div>
+        <a asp-action="Index" class="btn btn-dark">Volver</a>
+    </div>
 </div>

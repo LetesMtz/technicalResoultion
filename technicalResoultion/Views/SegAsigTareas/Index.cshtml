@@ -4,6 +4,12 @@
 @{
     ViewBag.Title = "SEGUIMIENTO Y ASIGNACIÓN DE TAREAS";
 }
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif; /* Aplica Montserrat a todo el cuerpo */
+    }
+
+</style>
 
 <div class="btnVolver d-flex position-fixed bottom-0 p-3 ">
     <a href="#" class="form-control bg-black text-light text-decoration-none ">Volver</a>
@@ -11,11 +17,11 @@
 
 <div class="container mt-5 d-flex justify-content-center ">
     <div class="btnAsignarDiv">
-        <a asp-action="AsignarTarea" class="">
-            <div class="btnAsignarElementos">
-                <img src="./img/portapapeles.png" alt="">
-                <div>
-                    <span>Asignar tareas</span>
+        <a asp-action="AsignarTarea" style="text-decoration: none;">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid black; padding: 10px; width: 300px;">
+                <img src="https://cdn-icons-png.flaticon.com/512/1355/1355778.png" alt="" style="width: 128px; height: 128px;">
+                <div style="margin-top: 8px;">
+                    <span style="color: black; text-decoration: none; text-align: center; font-weight: bold;">Asignar tareas</span>
                 </div>
             </div>
         </a>
@@ -59,8 +65,9 @@
                             <td>@item.nombre</td>
                             <td>@item.prioridad</td>
                             <td><span class="estadoTabla">@item.progreso</span></td>
-                            <td>@Html.ActionLink("Detalles", "TareasYComentarios", "SegAsigTareas", new { id = item.id })</td>
+                            <td>@Html.ActionLink("Detalles", "TareasYComentarios", "SegAsigTareas", new { id = item.id }, new { style = "color: blue; font-weight: bold; text-decoration: none;" })</td>
                         </tr>
+
                     }
                 }
             </tbody>
@@ -114,7 +121,7 @@
     </div>
 </div>
 
-<div class="container mt-5 me-5 mb-5 ">
+<div class="container mt-5 me-5 mb-5">
     <h2 class="fw-bold mb-3">Estadísticas</h2>
-    <a href="#" class="btnDash">Ir al dashboard</a>
+    <a href="#" class="btn btn-info">Ir al dashboard</a>
 </div>
