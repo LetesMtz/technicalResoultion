@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Detalles del Usuario Externo";
+    var externo = (technicalResoultion.Models.externos)ViewData["externo"];
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold">Detalles del Usuario Externo</h2>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>@externo.nombres_e @externo.apellidos_e</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>ID:</strong> @externo.id_externo</p>
+            <p><strong>Nombre:</strong> @externo.nombres_e @externo.apellidos_e</p>
+            <p><strong>Correo:</strong> @externo.correo_e</p>
+            <p><strong>Correo Login:</strong> @externo.correo_login</p>
+            <p><strong>Contraseña:</strong> @externo.contrasena_e</p>
+            <p><strong>Empresa:</strong> @externo.nombre_empresa</p>
+            <p><strong>Contacto Principal:</strong> @externo.contacto_principal</p>
+            <p><strong>Dirección:</strong> @externo.direccion</p>
+            <p><strong>Teléfono:</strong> @externo.telefono</p>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="Index" class="btn btn-dark">Volver</a>
+    </div>
+</div>

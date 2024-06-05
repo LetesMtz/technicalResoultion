@@ -9,7 +9,11 @@ namespace technicalResoultion.Models
         public string? nombres_e { get; set; }
         public string? apellidos_e { get; set; }
         public string? tipo_usuario { get; set; }
+        
+        [EmailAddress(ErrorMessage = "Por favor, ingrese un correo electrónico válido.")]
         public string? correo_e { get; set; }
+        
+        [EmailAddress(ErrorMessage = "Por favor, ingrese un correo electrónico válido.")]
         public string? correo_login { get; set; }
         public string? contrasena_e { get; set; }
         public string? nombre_empresa { get; set; }

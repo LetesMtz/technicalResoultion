@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Crear Usuario Externo";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post" class="needs-validation" novalidate>
+                <br />
+                <div class="form-group">
+                    <input type="text" class="form-control" id="nombres_e" name="nombres_e" placeholder="Nombres" required />
+                    <div class="invalid-feedback">Por favor, ingrese un nombre.</div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="apellidos_e" name="apellidos_e" placeholder="Apellidos" required />
+                    <div class="invalid-feedback">Por favor, ingrese un apellido.</div>
+                </div>
+                <input type="hidden" id="tipo_usuario" name="tipo_usuario" value="Externo" />
+                <br>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="correo_e" name="correo_e" placeholder="Correo" required />
+                    <div class="invalid-feedback">Por favor, ingrese un correo electrónico válido.</div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Número de celular" required />
+                    <div class="invalid-feedback">Por favor, ingrese un número de celular válido.</div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" placeholder="Nombre de la empresa" required />
+                    <div class="invalid-feedback">Por favor, ingrese el nombre de la empresa.</div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="contacto_principal" name="contacto_principal" placeholder="Contacto principal" required />
+                    <div class="invalid-feedback">Por favor, ingrese el contacto principal.</div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Crear</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</div>
+

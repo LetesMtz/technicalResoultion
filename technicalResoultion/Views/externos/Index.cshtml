@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Usuarios Externos";
+}
+
+<div class="container mt-5">
+    <div class="cabecera d-flex justify-content-between">
+        <div class="titulo">
+            <h1 class="fw-bold">Vista de usuarios externos</h1>
+            <h3>Usuarios externos que han sido registrados</h3>
+        </div>
+        <div class="botones d-flex">
+            <div class="ms-5 mt-4 h-100">
+                <a asp-action="Create" class="form-control bg-primary text-light text-decoration-none fw-bold text-center">Crear Usuario Externo</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabla mt-4">
+        <table class="table table-striped">
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (IEnumerable<technicalResoultion.Models.externos>)ViewData["externos"])
+                {
+                    <tr>
+                        <th scope="row">@item.id_externo</th>
+                        <td>@item.nombres_e @item.apellidos_e</td>
+                        <td>@item.correo_e</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.id_externo" class="text-decoration-none">Detalles</a>
+                            <a asp-action="Edit" asp-route-id="@item.id_externo" class="text-decoration-none">Editar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
