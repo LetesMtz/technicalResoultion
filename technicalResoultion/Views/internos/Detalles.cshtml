@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewBag.Title = "Detalles del Usuario Interno";
+    var interno = (dynamic)ViewData["interno"];
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold">Detalles del Usuario Interno</h2>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>@interno.nombres_i @interno.apellidos_i</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>ID:</strong> @interno.id_interno</p>
+            <p><strong>Nombre:</strong> @interno.nombres_i @interno.apellidos_i</p>
+            <p><strong>Tipo de Usuario:</strong> @interno.tipo_usuario</p>
+            <p><strong>Correo:</strong> @interno.correo_i</p>
+            <p><strong>Rol:</strong> @interno.Rol</p>
+            <p><strong>Descripción de Permisos:</strong> @interno.permisos_descripcion</p>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <a asp-action="Index1" class="btn btn-dark">Volver</a>
+        </div>
+    </div>
+</div>

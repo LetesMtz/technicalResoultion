@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewBag.Title = "Usuarios Internos";
+}
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif; /* Aplica Montserrat a todo el cuerpo */
+    }
+
+</style>
+
+<div class="container mt-5">
+    <div class="cabecera d-flex justify-content-between">
+        <div class="titulo">
+            <h1 class="fw-bold">Vista de usuarios internos</h1>
+            <h3>Usarios internos que han sido registrados</h3>
+        </div>
+        <div class="botones d-flex">
+            <div class="ms-5 mt-4 h-100">
+                <a asp-action="CrearInterno" class="form-control bg-primary text-light text-decoration-none fw-bold text-center">Crear Usuario Interno</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabla mt-4">
+        <table class="table table-striped">
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (IEnumerable<dynamic>)ViewData["internos"])
+                {
+                    <tr>
+                        <th scope="row">@item.id_interno</th>
+                        <td>@item.Nombre</td>
+                        <td>@item.Rol</td>
+                        <td>
+                            <a asp-action="Detalles" asp-route-id="@item.id_interno" class="text-decoration-none">Detalles</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
