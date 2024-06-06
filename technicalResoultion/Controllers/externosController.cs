@@ -32,8 +32,10 @@ namespace technicalResoultion.Controllers
             {
                 return NotFound();
             }
-            return View(externo);
+            ViewData["externo"] = externo; // Asignar el objeto "externo" al ViewData
+            return View();
         }
+
 
         public IActionResult Create()
         {
