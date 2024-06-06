@@ -1,7 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     ViewData["Title"] = "DASHBOARD";
 }
 
@@ -81,57 +78,58 @@
                             <p class="numero" id="empleados-con-ticket"><b>@ViewBag.EmpleadosConTicket</b></p>
                             <p class="texto"><strong>Empleados</strong><br />con tickets asignados</p>
                         </div>
-                    </div>
-                    <div class="fila">
-                        <div class="columna2">
-                            <p style="line-height: 1.2; font-weight: 800;">
-                                <strong>Tiempo promedio de resolución:</strong><br>
-                                <span style="font-size: 25px;" id="tiempo-resolucion"><b>@ViewBag.TiempoPromedioResolucionHoras</b> horas</span>
-                            </p>
-                        </div>
-                        <div class="columna2">
-                            <button type="button" class="btn btn-dark w-70">Informe de Tickets</button>
+                        <div class="fila">
+                            <div class="columna2">
+                                <p style="line-height: 1.2; font-weight: 800;">
+                                    <strong>Tiempo promedio de resolución:</strong><br>
+                                    <span style="font-size: 25px;" id="tiempo-resolucion"><b>@ViewBag.TiempoPromedioResolucionHoras</b> horas</span>
+                                </p>
+                            </div>
+                            <div class="columna2">
+                                <button type="button" class="btn btn-dark w-70">Informe de Tickets</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div style="margin-top: 25px;">
-    <a href="@Url.Action("Index", "Home")" class="btn btn-dark">Volver</a>
-</div>
+    <div style="margin-top: 25px;">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-dark">Volver</a>
+    </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var ctx = document.getElementById('miGraficoPastel').getContext('2d');
-        var myPieChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Internet', 'Redes móviles', 'Cable'],
-                datasets: [{
-                    label: 'Porcentaje de Categorías',
-                    data: [70, 14, 16], // Los porcentajes de cada categoría
-                    backgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)'
-                    ],
-                    hoverOffset: 4 // Espacio entre la porción y el cursor al pasar el mouse
-                }]
-            },
-            options: {
-                responsive: true,
-                cutout: '40%', // Tamaño del agujero en el centro (70% del radio)
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'right'
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var tendencias = @Html.Raw(Json.Serialize(ViewBag.Tendencias));
+
+            var ctx = document.getElementById('miGraficoPastel').getContext('2d');
+            var myPieChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(tendencias),
+                    datasets: [{
+                        label: 'Porcentaje de Categorías',
+                        data: Object.values(tendencias),
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    cutout: '40%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'right'
+                        }
                     }
                 }
-            }
+            });
         });
-    });
-</script>
+    </script>

@@ -18,6 +18,7 @@ namespace technicalResoultion.Models
         public DbSet<asignar_tareas> asignar_tareas { get; set; }
         public DbSet<comentarios> comentarios { get; set; }
         public DbSet<dashboard> dashboard { get; set; }
+        public DbSet<categorias> categorias { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
