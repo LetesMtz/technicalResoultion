@@ -1,0 +1,61 @@
+﻿@using System.Security.Claims
+@{
+    ViewData["Title"] = "Home";
+    var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+    var isExterno = User.Claims.Any(c => c.Type == "TipoUsuario" && c.Value == "Externo");
+}
+
+<div class="text-center pt-5">
+    @if (userRole == "Administrador")
+    {
+        <div style="margin-bottom: 5px; display: flex; justify-content: center; align-items: center; height: 80px;">
+            <a href="@Url.Action("Index1", "internos")" class="btn btn-lg btn-block py-2 text-center" style="font-family: 'Montserrat', sans-serif; width: 200px; height: 80px; background-color: #19adc1; border-color: #19adc1; color: white;">USUARIOS INTERNOS</a>
+        </div>
+        <br />
+        <div style="margin-bottom: 5px;  display: flex; justify-content: center; align-items: center; height: 80px; ">
+            <a href="@Url.Action("Index", "Externos")" class="btn btn-lg btn-block py-2 text-center" style="font-family: 'Montserrat', sans-serif; width: 200px; height: 80px;  background-color: #19adc1; border-color: #19adc1; color: white;">USUARIOS EXTERNOS</a>
+        </div>
+    }
+    <br />
+    @if (userRole == "Administrador" || userRole == "Funcionalidad" || isExterno)
+    {
+        <div style="margin-bottom: 5px; display: flex; justify-content: center; height: 80px;">
+            <a href="@Url.Action("Index", "GestionTickets")" class="btn btn-lg btn-block py-2 text-center" style="font-family: 'Montserrat', sans-serif; width: 200px; height: 80px; line-height: 65px; background-color: #19adc1; border-color: #19adc1; color: white;">TICKETS</a>
+        </div>
+    }
+    <br />
+    @if (userRole == "Administrador" || userRole == "Desarrollador" || userRole == "Funcionalidad")
+    {
+        <div style="margin-bottom: 5px; display: flex; justify-content: center; height: 80px;">
+            <a href="@Url.Action("Index", "SegAsigTareas")" class="btn btn-lg btn-block py-2 text-center" style="font-family: 'Montserrat', sans-serif; width: 200px; height: 80px; line-height: 65px; background-color: #19adc1; border-color: #19adc1; color: white;">TAREAS</a>
+        </div>
+    }
+    <br />
+    @if (userRole == "Administrador" || userRole == "Auditor")
+    {
+        <div style="margin-bottom: 5px; display: flex; justify-content: center; height: 80px;">
+            <a href="@Url.Action("Index", "Informes")" class="btn btn-lg btn-block py-2 text-center" style="font-family: 'Montserrat', sans-serif; width: 200px; height: 80px; line-height: 65px; background-color: #19adc1; border-color: #19adc1; color: white;">INFORMES</a>
+        </div>
+    }
+
+   <br />
+    <div style="margin-top: 50px;">
+        <form method="post" action="@Url.Action("Logout", "Login")">
+            <button type="submit" class="btn btn-link" style="color: blue;">Cerrar Sesión</button>
+        </form>
+    </div>
+</div>
+
+   
+    
+
+
+
+
+    
+
+
+
+
+
+

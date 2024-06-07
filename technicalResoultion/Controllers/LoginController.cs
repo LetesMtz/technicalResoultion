@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using technicalResoultion.Models;
 using System.Text.Json;
 using technicalResoultion.Data;
+using System.Security.Claims;
+
 
 namespace technicalResoultion.Controllers
 {
@@ -62,7 +64,68 @@ namespace technicalResoultion.Controllers
             return View();
         }
 
-        public IActionResult Login(string? correo, string? clave)
+
+        [HttpPost]
+        public async Task<IActionResult> Login(string correo, string clave)
+        {
+            if (!string.IsNullOrEmpty(correo) && !string.IsNullOrEmpty(clave))
+            {
+                var externo = _TechResContext.externos.FirstOrDefault(ex => ex.correo_login == correo && ex.contrasena_e == clave);
+
+                if (externo != null)
+                {
+                    string datosUsuario = JsonSerializer.Serialize(externo);
+                    HttpContext.Session.SetString("usuario", datosUsuario);
+                    await SignInUser(externo.correo_login, "Externo", "Externo");
+                    return RedirectToAction("Index1", "Home");
+                }
+                else
+                {
+                    var interno = _TechResContext.internos.FirstOrDefault(ex => ex.correo_i == correo && ex.contrasena_i == clave);
+
+                    if (interno != null)
+                    {
+                        string datosUsuario = JsonSerializer.Serialize(interno);
+                        HttpContext.Session.SetString("usuario", datosUsuario);
+
+                        var role = _TechResContext.roles.FirstOrDefault(r => r.id_role == interno.id_role)?.nombre_role;
+                        await SignInUser(interno.correo_i, role, "Interno");
+                        return RedirectToAction("Index1", "Home");
+                    }
+                }
+            }
+
+            ModelState.AddModelError("", "Correo o contraseña incorrectos.");
+            return View("Index");
+        }
+
+        private async Task SignInUser(string correo, string role, string tipoUsuario)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, correo),
+                new Claim(ClaimTypes.Role, role),
+                new Claim("TipoUsuario", tipoUsuario)
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index");
+        }
+
+
+
+        public IActionResult Login1(string? correo, string? clave)
         {
             //await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme,
             //    new AuthenticationProperties
@@ -82,7 +145,7 @@ namespace technicalResoultion.Controllers
 
                     HttpContext.Session.SetString("usuario", datosUsuario);
 
-                    return RedirectToAction("Index", "GestionTickets", new { area = "" });
+                    return RedirectToAction("Index1", "Home", new { area = "" });
                 }
                 else
                 {
@@ -96,7 +159,7 @@ namespace technicalResoultion.Controllers
 
                         HttpContext.Session.SetString("usuario", datosUsuario);
 
-                        return RedirectToAction("Index", "SegAsigTareas", new { area = "" });
+                        return RedirectToAction("Index1", "Home", new { area = "" });
                     }
                 }
             }
@@ -146,7 +209,7 @@ namespace technicalResoultion.Controllers
 
         //}
 
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout1()
         {
             //await HttpContext.SignOutAsync();
 
