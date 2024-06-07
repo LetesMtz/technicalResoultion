@@ -5,6 +5,7 @@ using technicalResoultion.Data;
 using technicalResoultion.Models;
 using System.Text.Json;
 using technicalResoultion.Services;
+using NuGet.Protocol;
 
 namespace technicalResoultion.Controllers
 {
@@ -55,6 +56,7 @@ namespace technicalResoultion.Controllers
                                progreso = e2.nombre
                            }).ToList();
 
+
             ViewBag.Tickets = tickets;
 
             var internos = (from i in _TechResContext.internos
@@ -70,16 +72,22 @@ namespace technicalResoultion.Controllers
 
             ViewBag.Internos = internos;
 
-
-            correo enviarCorreo = new correo(_configuration);
-
-            enviarCorreo.enviar("soymariohdez@gmail.com", "Prueba Asunto", "Esta es una NUEVA prueba de correo");
-
             return View();
         }
 
         public IActionResult CreateTarea(int id_ticket, string tare_area)
         {
+
+            var usuarioExterno = (from t in _TechResContext.tickets
+                           join e in _TechResContext.externos
+                           on t.id_cliente equals e.id_externo
+                           where t.id_ticket == id_ticket
+                           select new
+                           {
+                               id = t.id_ticket,
+                               correo = e.correo_login
+                           }).ToList();
+
             string[] tareasAsignadas = tare_area.TrimEnd(';').Split(';');
             string[][] tareaEncargado = new string[tareasAsignadas.Length][];
 
@@ -98,6 +106,14 @@ namespace technicalResoultion.Controllers
                 _TechResContext.asignar_tareas.Add(tareas);
                 _TechResContext.SaveChanges();
             }
+
+
+            correo enviarCorreo = new correo(_configuration);
+
+            string correoParaEnviar = usuarioExterno[0].correo; //GUARDAR CORREO DEL QUE INICIÓ SESIÓN
+
+            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, se ha actualizado su ticket numero:"+ id_ticket + "\n\n Se le asigno a la siguiente persona/s"+ tareaEncargado);
+
 
             return RedirectToAction("AsignarTarea");
         }
