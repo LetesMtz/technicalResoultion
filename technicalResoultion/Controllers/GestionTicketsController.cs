@@ -140,7 +140,7 @@ namespace technicalResoultion.Controllers
             var datosUsuario = JsonSerializer.Deserialize<externos>(HttpContext.Session.GetString("usuario"));
             string correoParaEnviar = datosUsuario.correo_e; //GUARDAR CORREO DEL QUE INICIÓ SESIÓN
 
-            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, se ha creado su ticket. \nNo. de seguimiento: " + ticket.id_ticket +
+            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, se ha creado su ticket. \n \nNo. de seguimiento: " + ticket.id_ticket +
                 "\nProblema: " + ticket.nombre_problema + "\nDescripción: " + ticket.descripcion + ". \n \nEspere nuevos informes.");
 
 
