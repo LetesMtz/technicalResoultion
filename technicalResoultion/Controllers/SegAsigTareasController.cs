@@ -81,12 +81,14 @@ namespace technicalResoultion.Controllers
             var usuarioExterno = (from t in _TechResContext.tickets
                            join e in _TechResContext.externos
                            on t.id_cliente equals e.id_externo
+                           join es in _TechResContext.estados
+                           on t.id_estado_progreso equals es.id_estado
                            where t.id_ticket == id_ticket
                            select new
                            {
                                id = t.id_ticket,
                                correo = e.correo_login,
-                               estado = t.id_estado_progreso
+                               estado = es.nombre
                            }).ToList();
 
             string[] tareasAsignadas = tare_area.TrimEnd(';').Split(';');
