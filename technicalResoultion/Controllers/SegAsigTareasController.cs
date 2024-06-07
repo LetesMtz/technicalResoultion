@@ -85,7 +85,8 @@ namespace technicalResoultion.Controllers
                            select new
                            {
                                id = t.id_ticket,
-                               correo = e.correo_login
+                               correo = e.correo_login,
+                               estado = t.id_estado_progreso
                            }).ToList();
 
             string[] tareasAsignadas = tare_area.TrimEnd(';').Split(';');
@@ -112,7 +113,7 @@ namespace technicalResoultion.Controllers
 
             string correoParaEnviar = usuarioExterno[0].correo; //GUARDAR CORREO DEL QUE INICIÓ SESIÓN
 
-            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, se ha actualizado su ticket numero:"+ id_ticket + "\n\n Se le asigno a la siguiente persona/s"+ tareaEncargado);
+            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, se ha actualizado el estado de su ticket = "+ usuarioExterno[0].estado);
 
 
             return RedirectToAction("AsignarTarea");
