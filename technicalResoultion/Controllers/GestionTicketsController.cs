@@ -6,16 +6,19 @@ using Firebase.Storage;
 using System.Text.Json;
 using static Azure.Core.HttpHeader;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using technicalResoultion.Services;
 
 namespace technicalResoultion.Controllers
 {
     public class GestionTicketsController : Controller
     {
         private readonly TechResContext _TechResContext;
+        private IConfiguration _configuration;
 
-        public GestionTicketsController(TechResContext context)
+        public GestionTicketsController(TechResContext context, IConfiguration configuration)
         {
             _TechResContext = context;
+            _configuration = configuration; 
         }
 
         public IActionResult Index()
@@ -85,6 +88,7 @@ namespace technicalResoultion.Controllers
             return View();
         }
 
+
         public async Task<IActionResult> CreateTicket(IFormFile archivo, int id_usuario, string nombre_problema, string descripcion, int prioridad)
         {
             var urlArchivoCargado = "";
@@ -126,8 +130,21 @@ namespace technicalResoultion.Controllers
             ticket.id_estado_prioridad = prioridad;
             ticket.id_estado_progreso = 4;
 
+
             _TechResContext.tickets.Add(ticket);
             _TechResContext.SaveChanges();
+
+            //AQUÍ VA LA PARTE DE ENVÍO DE CORREO
+            correo enviarCorreo = new correo(_configuration);
+
+            var datosUsuario = JsonSerializer.Deserialize<externos>(HttpContext.Session.GetString("usuario"));
+            string correoParaEnviar = datosUsuario.correo_e; //GUARDAR CORREO DEL QUE INICIÓ SESIÓN
+
+            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, se ha creado su ticket. \nNo. de seguimiento: " + ticket.id_ticket +
+                "\nProblema: " + ticket.nombre_problema + "\nDescripción: " + ticket.descripcion + ". \n \nEspere nuevos informes.");
+
+
+
 
             return RedirectToAction("Index");
         }

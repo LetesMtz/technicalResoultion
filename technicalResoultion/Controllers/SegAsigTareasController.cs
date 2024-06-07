@@ -4,6 +4,7 @@ using System.Numerics;
 using technicalResoultion.Data;
 using technicalResoultion.Models;
 using System.Text.Json;
+using technicalResoultion.Services;
 
 namespace technicalResoultion.Controllers
 {
@@ -11,10 +12,12 @@ namespace technicalResoultion.Controllers
     {
         public static int id_ticket;
         private readonly TechResContext _TechResContext;
+        private IConfiguration _configuration;
 
-        public SegAsigTareasController(TechResContext context)
+        public SegAsigTareasController(TechResContext context, IConfiguration configuration)
         {
             _TechResContext = context;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -66,6 +69,11 @@ namespace technicalResoultion.Controllers
                             }).ToList();
 
             ViewBag.Internos = internos;
+
+
+            correo enviarCorreo = new correo(_configuration);
+
+            enviarCorreo.enviar("soymariohdez@gmail.com", "Prueba Asunto", "Esta es una NUEVA prueba de correo");
 
             return View();
         }
