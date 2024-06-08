@@ -7,6 +7,7 @@ using System.Text.Json;
 using Firebase.Auth;
 using Microsoft.EntityFrameworkCore;
 using technicalResoultion.Services;
+using System.Linq;
 
 namespace technicalResoultion.Controllers
 {
@@ -273,8 +274,27 @@ namespace technicalResoultion.Controllers
                     // Guardar los cambios en la base de datos
                     _TechResContext.SaveChanges();
 
-                    // Redireccionar a la acción DetalleTarea con el ID de la tarea
-                    return RedirectToAction("Index", new { id = id_tarea });
+            //AQUÍ VA LA PARTE DE ENVÍO DE CORREO
+            correo enviarCorreo = new correo(_configuration);
+
+            var datosUsuario = JsonSerializer.Deserialize<externos>(HttpContext.Session.GetString("usuario"));
+            string correoParaEnviar = datosUsuario.correo_e; //GUARDAR CORREO DEL QUE INICIÓ SESIÓN
+
+            var estadoTarea = from t in _TechResContext.asignar_tareas
+                              join e in _TechResContext.estados on t.id_estado_progreso equals e.id_estado
+                              where t.id_tarea == tareaActualizar.id_tarea
+                              select e.nombre;
+
+
+            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, ha habido una actualización en su ticket.\n \nNo. de seguimiento:  " + tareaActualizar.id_ticket + " \nEstado de su ticket: " +
+                "En progreso \n \nTarea actual: " + tareaActualizar.tarea + "\nEstado de tarea: " + estadoTarea + ".");
+
+
+
+
+
+            // Redireccionar a la acción DetalleTarea con el ID de la tarea
+            return RedirectToAction("Index", new { id = id_tarea });
 
         }
 
