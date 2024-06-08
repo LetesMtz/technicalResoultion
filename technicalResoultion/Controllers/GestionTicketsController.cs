@@ -74,6 +74,8 @@ namespace technicalResoultion.Controllers
                            on t.id_estado_prioridad equals e.id_estado
                            join e2 in _TechResContext.estados
                            on t.id_estado_progreso equals e2.id_estado
+                           join c in _TechResContext.categorias
+                           on t.id_categoria equals c.id_categoria
                            where t.id_cliente == id && t.tipo_cliente == tipo_usuario
                            select new
                            {
@@ -81,7 +83,7 @@ namespace technicalResoultion.Controllers
                                nombre = t.nombre_problema,
                                prioridad = e.nombre,
                                progreso = e2.nombre,
-                               categoria = t.id_categoria,
+                               categoria = c.categoria,
                                fecha = t.fecha_creacion
                            }).ToList();
             ViewData["tickets"] = tickets;
@@ -146,10 +148,15 @@ namespace technicalResoultion.Controllers
                 //ViewBag.telefono_cliente = cliente.First().telefono;
             }
 
+            var categorias = (from c in _TechResContext.categorias
+                              select c).ToList();
+
+            ViewBag.categorias = categorias;
+
             return View();
         }
 
-        public async Task<IActionResult> CreateTicket(IFormFile archivo, int id_usuario, string nombre_problema, string descripcion, int prioridad, string tipo_usuario)
+        public async Task<IActionResult> CreateTicket(IFormFile archivo, int id_usuario, string nombre_problema, string descripcion, int prioridad, string tipo_usuario, int id_categoria)
         {
             var urlArchivoCargado = "";
 
@@ -189,6 +196,7 @@ namespace technicalResoultion.Controllers
             ticket.archivos = urlArchivoCargado;
             ticket.id_estado_prioridad = prioridad;
             ticket.id_estado_progreso = 4;
+            ticket.id_categoria = id_categoria;
 
 
             _TechResContext.tickets.Add(ticket);
