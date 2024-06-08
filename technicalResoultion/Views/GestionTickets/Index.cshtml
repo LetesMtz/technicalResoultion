@@ -92,7 +92,7 @@
 
 @if (ViewBag.tipo_usuario != "Externo")
 {
-    <div class="btnVolver d-flex position-fixed bottom-0 p-3 ">
-        <a href="#" class="form-control bg-black text-light text-decoration-none ">Volver</a>
+    <div style="margin-bottom: 10px;">
+        <a href="@Url.Action("Index1", "Home")" class="btn btn-dark">Volver</a>
     </div>
 }
