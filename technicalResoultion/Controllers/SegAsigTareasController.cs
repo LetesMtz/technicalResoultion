@@ -316,6 +316,7 @@ namespace technicalResoultion.Controllers
                          }).ToList();
 
             ViewBag.tarea = tarea;
+            ViewBag.progresoActual = tarea.First().progreso;
 
             var progreso = (from e in _TechResContext.estados
                             where e.tipo_estado == "Progreso"
