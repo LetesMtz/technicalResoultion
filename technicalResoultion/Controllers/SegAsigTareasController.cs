@@ -118,7 +118,7 @@ namespace technicalResoultion.Controllers
 
             string correoParaEnviar = usuarioExterno[0].correo; //GUARDAR CORREO DEL QUE INICIÓ SESIÓN
 
-            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, se ha actualizado el estado de su ticket = "+ usuarioExterno[0].estado);
+            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, ha habido una actualización en su ticket.\n \nNo. de seguimiento:  "+ id_ticket +" \nEstado de su ticket: " + usuarioExterno[0].estado);
 
 
             return RedirectToAction("AsignarTarea");
@@ -207,6 +207,20 @@ namespace technicalResoultion.Controllers
         {
             _TechResContext.Update(ticket);
             await _TechResContext.SaveChangesAsync();
+
+
+
+
+
+
+            //AQUÍ VA LA PARTE DE ENVÍO DE CORREO
+            correo enviarCorreo = new correo(_configuration);
+
+            var datosUsuario = JsonSerializer.Deserialize<externos>(HttpContext.Session.GetString("usuario"));
+            string correoParaEnviar = datosUsuario.correo_e; //GUARDAR CORREO DEL QUE INICIÓ SESIÓN
+
+            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, ha habido una actualización en su ticket.\n \nNo. de seguimiento:  " + ticket.id_ticket + " \nEstado de su ticket: " +
+                "Cerrado \n \nEl caso ha sido cerrado exitosamente, favor crear un nuevo ticket en caso de presentar más inconvenientes.");
 
             return RedirectToAction("Index");
         }
