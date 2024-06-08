@@ -72,6 +72,7 @@
         var nombre_problema = document.getElementById('nombre_problema').value;
         var descripcion = document.getElementById('descripcion').value;
         var prioridad = document.getElementById('prioridad').value;
+        var categoria = document.getElementById('id_categoria').value;
         var archivo = document.querySelector('#archivo').files[0];
 
         if (archivo == null) {
@@ -79,7 +80,7 @@
             return;
         }
 
-        if (nombre_problema.length == 0 || descripcion.length == 0 || prioridad == "Prioridad" || archivo == null   ) {
+        if (nombre_problema.length == 0 || descripcion.length == 0 || prioridad == "Prioridad" || archivo == null || categoria == "Categoría"  ) {
             alert('Se deben rellenar todos los campos solicitados');
             return;
         }
