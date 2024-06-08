@@ -88,10 +88,15 @@
                             <div class="columna2">
                                 <a href="@Url.Action("Index", "Informes")" class="btn btn-dark w-70">Ir a Informes</a>
                             </div>
+                            
                         </div>
+                        
                     </div>
+
                 </div>
+                
             </div>
+            
         </div>
     </div>
 
@@ -110,7 +115,7 @@
                 data: {
                     labels: Object.keys(tendencias),
                     datasets: [{
-                        label: 'Porcentaje de Categorías',
+                        label: 'Cantidad: ',
                         data: Object.values(tendencias),
                         backgroundColor: [
                             'rgb(255, 99, 132)',
