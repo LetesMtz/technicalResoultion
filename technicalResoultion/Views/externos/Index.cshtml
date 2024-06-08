@@ -22,6 +22,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Correo</th>
+                    <th scope="col">Estado</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -32,6 +33,16 @@
                         <th scope="row">@item.id_externo</th>
                         <td>@item.nombres_e @item.apellidos_e</td>
                         <td>@item.correo_e</td>
+                        <td>
+                            @if (item.correo_login != null)
+                            {
+                                <span class="badge bg-success">Registrado</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Sin registrar</span>
+                            }
+                        </td>
                         <td>
                             <a asp-action="Details" asp-route-id="@item.id_externo" class="text-decoration-none">Detalles</a>
                             <a asp-action="Edit" asp-route-id="@item.id_externo" class="text-decoration-none">Editar</a>

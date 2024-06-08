@@ -1,0 +1,56 @@
+﻿@model technicalResoultion.Models.externos
+
+@{
+    ViewBag.Title = "Registrar Usuario Externo";
+}
+
+<div class="container mt-5">
+    <h2 class="fw-bold">Registrar Usuario Externo</h2>
+    <form asp-action="Register" method="post" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label for="nombres_e">Nombres</label>
+            <input type="text" class="form-control" id="nombres_e" name="nombres_e" required />
+            <div class="invalid-feedback">Por favor, ingrese un nombre.</div>
+        </div>
+        <div class="form-group">
+            <label for="apellidos_e">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos_e" name="apellidos_e" required />
+            <div class="invalid-feedback">Por favor, ingrese un apellido.</div>
+        </div>
+        <div class="form-group">
+            <label for="correo_e">Correo</label>
+            <input type="email" class="form-control" id="correo_e" name="correo_e" required />
+            <div class="invalid-feedback">Por favor, ingrese un correo electrónico válido.</div>
+        </div>
+        <div class="form-group">
+            <label for="nombre_empresa">Nombre de la Empresa</label>
+            <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" required />
+            <div class="invalid-feedback">Por favor, ingrese el nombre de la empresa.</div>
+        </div>
+        <div class="form-group">
+            <label for="contacto_principal">Contacto Principal</label>
+            <input type="text" class="form-control" id="contacto_principal" name="contacto_principal" required />
+            <div class="invalid-feedback">Por favor, ingrese el contacto principal.</div>
+        </div>
+        <div class="form-group">
+            <label for="direccion">Dirección</label>
+            <input type="text" class="form-control" id="direccion" name="direccion" required />
+            <div class="invalid-feedback">Por favor, ingrese una dirección.</div>
+        </div>
+        <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="number" class="form-control" id="telefono" name="telefono" required />
+            <div class="invalid-feedback">Por favor, ingrese un número de teléfono.</div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Registrar</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
