@@ -261,28 +261,23 @@ namespace technicalResoultion.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ActualizarTarea(int? id, [Bind("id_tarea, id_ticket, tarea, id_estado_progreso, id_interno")] asignar_tareas tarea)
+        public IActionResult ActualizarTarea(int id_tarea, int id_ticket, string tarea, int id_estado_progreso, int id_interno)
         {
-            _TechResContext.Update(tarea);
-            await _TechResContext.SaveChangesAsync();
+                var tareaActualizar = _TechResContext.asignar_tareas.FirstOrDefault(at => at.id_tarea == id_tarea);
 
-            //AQUÍ VA LA PARTE DE ENVÍO DE CORREO
-            correo enviarCorreo = new correo(_configuration);
+                    tareaActualizar.id_ticket = id_ticket;
+                    tareaActualizar.tarea = tarea;
+                    tareaActualizar.id_estado_progreso = id_estado_progreso;
+                    tareaActualizar.id_interno = id_interno;
 
-            var datosUsuario = JsonSerializer.Deserialize<externos>(HttpContext.Session.GetString("usuario"));
-            string correoParaEnviar = datosUsuario.correo_e; //GUARDAR CORREO DEL QUE INICIÓ SESIÓN
+                    // Guardar los cambios en la base de datos
+                    _TechResContext.SaveChanges();
 
-            var estadoTarea = from t in _TechResContext.asignar_tareas
-                              join e in _TechResContext.estados on t.id_estado_progreso equals e.id_estado
-                              where t.id_tarea == tarea.id_tarea
-                              select e.nombre;
+                    // Redireccionar a la acción DetalleTarea con el ID de la tarea
+                    return RedirectToAction("Index", new { id = id_tarea });
 
-
-            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, ha habido una actualización en su ticket.\n \nNo. de seguimiento:  " + tarea.id_ticket + " \nEstado de su ticket: " +
-                "En progreso \n \nTarea actual: " + tarea.tarea + "\nEstado de tarea: " + estadoTarea + ", favor crear un nuevo ticket en caso de presentar más inconvenientes.");
-
-            return RedirectToAction("Index");
         }
+
 
     }
 }
