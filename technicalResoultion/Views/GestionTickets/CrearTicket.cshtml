@@ -38,6 +38,15 @@
                 </select>
             </div>
             <div class="mt-2">
+                <select class="form-control " name="id_categoria" id="id_categoria">
+                    <option selected>Categoría</option>
+                    @foreach (var item in ViewBag.categorias)
+                    {
+                        <option value="@item.id_categoria">@item.categoria</option>
+                    }
+                </select>
+            </div>
+            <div class="mt-2">
                 <input type="text" class="form-control " name="nombre_cliente" id="nombre_cliente" value="@ViewBag.nombre_cliente" readonly>
             </div>
             <div class="mt-2">
