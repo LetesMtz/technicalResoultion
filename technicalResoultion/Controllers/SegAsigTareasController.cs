@@ -4,6 +4,8 @@ using System.Numerics;
 using technicalResoultion.Data;
 using technicalResoultion.Models;
 using System.Text.Json;
+using Firebase.Auth;
+using Microsoft.EntityFrameworkCore;
 
 namespace technicalResoultion.Controllers
 {
@@ -108,10 +110,17 @@ namespace technicalResoultion.Controllers
                             select new
                             {
                                 id = t.id_ticket,
+                                categoria = t.id_categoria,
                                 nombre = t.nombre_problema,
-                                archivo = t.archivos,
                                 descripcion = t.descripcion,
-                                prioridad = e.nombre
+                                archivo = t.archivos,
+                                fecha_creacion = t.fecha_creacion,
+                                fecha_modificacion = t.fecha_ult_mod,
+                                prioridad = e.nombre,
+                                id_prioridad = t.id_estado_prioridad,
+                                id_progreso = t.id_estado_progreso,
+                                id_cliente = t.id_cliente,
+                                tipo_cliente = t.tipo_cliente
                             }).ToList();
             ViewBag.Tickets = detalles;
 
@@ -163,6 +172,15 @@ namespace technicalResoultion.Controllers
             _TechResContext.SaveChanges();
 
             return RedirectToAction("TareasYComentarios");
+        }
+
+        public async Task<IActionResult> CerrarTicket(int? id, [Bind("id_ticket, id_categoria, nombre_problema, descripcion, archivos, fecha_creacion," +
+            "fecha_ult_mod, id_estado_prioridad, id_estado_progreso, id_cliente, tipo_cliente")] tickets ticket)
+        {
+            _TechResContext.Update(ticket);
+            await _TechResContext.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
     }
 }

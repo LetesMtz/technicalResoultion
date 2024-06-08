@@ -11,11 +11,12 @@
 
 </style>
 
-<form asp-action="CreateTicket" method="post" enctype="multipart/form-data">
+<form asp-action="CreateTicket" method="post" enctype="multipart/form-data" id="formulario">
     <div class="container d-flex justify-content-center mt-5 ">
         <div>
             <div>
                 <input type="hidden" name="id_usuario" id="id_usuario" value="@ViewBag.id_cliente">
+                <input type="hidden" name="tipo_usuario" id="tipo_usuario" value="@ViewBag.tipo_usuario">
                 <input type="text" class="form-control " placeholder="Nombre de la aplicación a reportar o servicio a solicitar" name="nombre_problema" id="nombre_problema">
             </div>
             <div class="mt-2">
@@ -51,6 +52,32 @@
         </div>
     </div>
 </form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("formulario").addEventListener('submit', validarFormulario);
+    });
+
+    function validarFormulario(evento) {
+        evento.preventDefault();
+        var nombre_problema = document.getElementById('nombre_problema').value;
+        var descripcion = document.getElementById('descripcion').value;
+        var prioridad = document.getElementById('prioridad').value;
+        var archivo = document.querySelector('#archivo').files[0];
+
+        if (archivo == null) {
+            alert('Problema con el archivo');
+            return;
+        }
+
+        if (nombre_problema.length == 0 || descripcion.length == 0 || prioridad == "Prioridad" || archivo == null   ) {
+            alert('Se deben rellenar todos los campos solicitados');
+            return;
+        }
+
+        this.submit();
+    }
+</script>
 
 <div>
     <a asp-action="Index" class="btn btn-dark">Volver</a>

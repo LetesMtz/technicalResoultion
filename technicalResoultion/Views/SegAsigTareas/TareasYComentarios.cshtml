@@ -41,6 +41,23 @@
                     <h5 class="fw-bold ">Prioridad:</h5>
                     <h5 class="fw-bold ">@item.prioridad</h5>
                 </div>
+                <div class="ms-5">
+                    <form asp-action="CerrarTicket" method="post">
+                        <input type="hidden" name="id_ticket" id="id_ticket" value="@item.id" />
+                        <input type="hidden" name="id_categoria" id="id_categoria" value="@item.categoria" />
+                        <input type="hidden" name="nombre_problema" id="nombre_problema" value="@item.nombre" />
+                        <input type="hidden" name="descripcion" id="descripcion" value="@item.descripcion" />
+                        <input type="hidden" name="archivos" id="archivos" value="@item.archivo" />
+                        <input type="hidden" name="fecha_creacion" id="fecha_creacion" value="@item.fecha_creacion" />
+                        <input type="hidden" name="fecha_ult_mod" id="fecha_ult_mod" value="@item.fecha_modificacion" />
+                        <input type="hidden" name="id_estado_prioridad" id="id_estado_prioridad" value="@item.id_prioridad" />
+                        <input type="hidden" name="id_estado_progreso" id="id_estado_progreso" value="6" />
+                        <input type="hidden" name="id_cliente" id="id_cliente" value="@item.id_cliente" />
+                        <input type="hidden" name="tipo_cliente" id="tipo_cliente" value="@item.tipo_cliente" />
+
+                        <input type="submit" class="btn btn-primary" value="Cerrar Ticket" />
+                    </form>
+                </div>
             </div>
         </div>
         <div class="mt-5 ">

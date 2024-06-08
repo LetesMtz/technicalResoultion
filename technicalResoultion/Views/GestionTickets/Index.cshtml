@@ -16,9 +16,15 @@
         <div class="botones d-flex ">
             <div>
                 <span>Filtrar por:</span>
-                <select name="" id="" class="form-control">
-                    <option selected>Categoria</option>
-                </select>
+                <div class="d-flex">
+                    <select name="" id="" class="form-control">
+                        <option selected>Categoria</option>
+                    </select>
+                    <select name="" id="" class="form-control">
+                        <option value="1">Categoria</option>
+                    </select>
+                    <input type="submit" name="name" value="" />
+                </div>
             </div>
             <div class="ms-5 mt-4 h-100 ">
                 <a asp-action="CrearTicket" class="form-control bg-primary text-light text-decoration-none fw-bold">Crear ticket</a>
@@ -33,7 +39,7 @@
                     <th scope="col" style="width: 8vw; padding-left: 1.5vw;">N° TICKET</th>
                     <th scope="col" style="width: 40vw;">NOMBRE</th>
                     <th scope="col">PRIORIDAD</th>
-                    <th scope="col">PROGRESO @ViewBag.tipo_usuario</th>
+                    <th scope="col">PROGRESO</th>
                     @if (ViewBag.tipo_usuario != "Externo")
                     {
                         <th scope="col">CATEGORÍA</th>
@@ -48,21 +54,24 @@
             <tbody>
                 @foreach (var item in (IEnumerable<dynamic>)ViewData["tickets"])
                 {
-                    <tr>
-                        <th scope="row" style="padding-left: 1.5vw; color: black;">@item.id</th>
-                        <td>@item.nombre</td>
-                        <td>@item.prioridad</td>
-                        <td>@item.progreso</td>
-                        @if (ViewBag.tipo_usuario != "Externo")
-                        {
-                            <td>@item.categoria</td>
-                        }
-                        <td>@item.fecha</td>
-                        @if (ViewBag.tipo_usuario != "Externo")
-                        {
-                            <td><a href="#" class="text-decoration-none ">Detalles</a></td>
-                        }
-                    </tr>
+                    if(item.progreso != "Resuelto")
+                    {
+                        <tr>
+                            <th scope="row" style="padding-left: 1.5vw; color: black;">@item.id</th>
+                            <td>@item.nombre</td>
+                            <td>@item.prioridad</td>
+                            <td>@item.progreso</td>
+                            @if (ViewBag.tipo_usuario != "Externo")
+                            {
+                                <td>@item.categoria</td>
+                            }
+                            <td>@item.fecha</td>
+                            @if (ViewBag.tipo_usuario != "Externo")
+                            {
+                                <td>@Html.ActionLink("Detalles", "TareasYComentarios", "SegAsigTareas", new { id = item.id }, new { style = "color: blue; font-weight: bold; text-decoration: none;" })</td>
+                            }
+                        </tr>
+                    }
                 }
                 @* <script>
                     for (i = 1; i < 8; i++) {
@@ -81,6 +90,9 @@
     </div>
 </div>
 
-<div class="btnVolver d-flex position-fixed bottom-0 p-3 ">
-    <a href="#" class="form-control bg-black text-light text-decoration-none ">Volver</a>
-</div>
+@if (ViewBag.tipo_usuario != "Externo")
+{
+    <div class="btnVolver d-flex position-fixed bottom-0 p-3 ">
+        <a href="#" class="form-control bg-black text-light text-decoration-none ">Volver</a>
+    </div>
+}
