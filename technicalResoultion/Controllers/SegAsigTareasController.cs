@@ -13,10 +13,12 @@ namespace technicalResoultion.Controllers
     {
         public static int id_ticket;
         private readonly TechResContext _TechResContext;
+        private IConfiguration _configuration;
 
-        public SegAsigTareasController(TechResContext context)
+        public SegAsigTareasController(TechResContext context, IConfiguration configuration)
         {
             _TechResContext = context;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -54,6 +56,7 @@ namespace technicalResoultion.Controllers
                                progreso = e2.nombre
                            }).ToList();
 
+
             ViewBag.Tickets = tickets;
 
             var internos = (from i in _TechResContext.internos
@@ -74,6 +77,9 @@ namespace technicalResoultion.Controllers
 
         public IActionResult CreateTarea(int id_ticket, string tare_area)
         {
+
+            
+
             string[] tareasAsignadas = tare_area.TrimEnd(';').Split(';');
             string[][] tareaEncargado = new string[tareasAsignadas.Length][];
 
@@ -92,6 +98,27 @@ namespace technicalResoultion.Controllers
                 _TechResContext.asignar_tareas.Add(tareas);
                 _TechResContext.SaveChanges();
             }
+
+
+            var usuarioExterno = (from t in _TechResContext.tickets
+                                  join e in _TechResContext.externos
+                                  on t.id_cliente equals e.id_externo
+                                  join es in _TechResContext.estados
+                                  on t.id_estado_progreso equals es.id_estado
+                                  where t.id_ticket == id_ticket
+                                  select new
+                                  {
+                                      id = t.id_ticket,
+                                      correo = e.correo_login,
+                                      estado = es.nombre
+                                  }).ToList();
+
+            correo enviarCorreo = new correo(_configuration);
+
+            string correoParaEnviar = usuarioExterno[0].correo; //GUARDAR CORREO DEL QUE INICIÓ SESIÓN
+
+            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, se ha actualizado el estado de su ticket = "+ usuarioExterno[0].estado);
+
 
             return RedirectToAction("AsignarTarea");
         }

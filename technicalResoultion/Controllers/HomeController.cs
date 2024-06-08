@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using technicalResoultion.Models;
+using technicalResolution.Attributes;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace technicalResoultion.Controllers
 {
@@ -18,6 +21,12 @@ namespace technicalResoultion.Controllers
             return View();
         }
 
+
+        [Authorize(Roles = "Administrador,Desarrollador,Funcionalidad,Auditor,Externo")]
+        public IActionResult Index1()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
