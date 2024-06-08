@@ -78,18 +78,20 @@
                             <p class="numero" id="empleados-con-ticket"><b>@ViewBag.EmpleadosConTicket</b></p>
                             <p class="texto"><strong>Empleados</strong><br />con tickets asignados</p>
                         </div>
-                        <div class="fila">
-                            <div class="columna2">
-                                <p style="line-height: 1.2; font-weight: 800;">
-                                    <strong>Tiempo promedio de resolución:</strong><br>
-                                    <span style="font-size: 25px;" id="tiempo-resolucion"><b>@ViewBag.TiempoPromedioResolucionHoras</b> horas</span>
-                                </p>
-                            </div>
-                            <div class="columna2">
-                                <a href="@Url.Action("Index", "Informes")" class="btn btn-dark w-70">Ir a Informes</a>
-                            </div>
-                            
+                    </div>
+                    <div class="fila">
+                        <div class="columna2">
+                            <p style="line-height: 1.2; font-weight: 800;">
+                                <strong>Tiempo promedio de resolución:</strong><br>
+                                <span style="font-size: 25px;" id="tiempo-resolucion"><b>@ViewBag.TiempoPromedioResolucionHoras</b> horas</span>
+                            </p>
                         </div>
+                        <div class="columna2">
+                            <a href="@Url.Action("Index", "Informes")" class="btn btn-dark w-70" style="width=100px; margin-right: 10px">Ir a Informes</a>
+                        </div>
+
+                    </div>
+                       
                         
                     </div>
 
