@@ -39,9 +39,24 @@
         <div class="botones d-flex ">
             <div>
                 <span>Filtrar por:</span>
-                <select name="" id="" class="form-control">
-                    <option selected>Categoria</option>
-                </select>
+                <form asp-action="Index" method="post">
+                    <div class="d-flex">
+                        <select class="form-control" name="ordenarPor1" id="ordenarPor1" class="form-control">
+                            <option value="1" selected>N° Ticket</option>
+                            <option value="2">Categoría</option>
+                            <option value="3">Prioridad</option>
+                            <option value="4">Progreso</option>
+                        </select>
+                        <select class="ms-2 form-control" name="ordenDescAsc1" id="ordenDescAsc1" class="form-control">
+                            <option value="1" selected>Ascendente</option>
+                            <option value="2">Descendente</option>
+                        </select>
+                        <input type="submit" class="btn btn-primary ms-2" value="Buscar" />
+                    </div>
+                </form>
+            </div>
+            <div class="ms-5 mt-4 h-100 ">
+                <a asp-action="CrearTicket" class="form-control bg-primary text-light text-decoration-none fw-bold">Crear ticket</a>
             </div>
         </div>
     </div>
@@ -58,19 +73,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ViewBag.Tickets)
+                @foreach (var item in ViewBag.Tickets_progreso)
                 {
-                    @if(@item.progreso == "En Progreso")
-                    {
-                        <tr>
-                            <th scope="row" style="padding-left: 1.5vw;">@item.id</th>
-                            <td>@item.nombre</td>
-                            <td>@item.prioridad</td>
-                            <td><span class="estadoTabla">@item.progreso</span></td>
-                            <td>@Html.ActionLink("Detalles", "TareasYComentarios", "SegAsigTareas", new { id = item.id }, new { style = "color: blue; font-weight: bold; text-decoration: none;" })</td>
-                        </tr>
-
-                    }
+                    <tr>
+                        <th scope="row" style="padding-left: 1.5vw;">@item.id</th>
+                        <td>@item.nombre</td>
+                        <td>@item.prioridad</td>
+                        <td><span class="estadoTabla">@item.progreso</span></td>
+                        <td>@Html.ActionLink("Detalles", "TareasYComentarios", "SegAsigTareas", new { id = item.id }, new { style = "color: blue; font-weight: bold; text-decoration: none;" })</td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -105,18 +116,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ViewBag.Tickets)
+                @foreach (var item in ViewBag.Tickets_espera)
                 {
-                    @if (@item.progreso == "En Espera")
-                    {
-                        <tr>
-                            <th scope="row" style="padding-left: 1.5vw;">@item.id</th>
-                            <td>@item.nombre</td>
-                            <td>@item.prioridad</td>
-                            <td><span class="estadoTabla">@item.progreso</span></td>
-                            <td>@Html.ActionLink("Detalles", "TareasYComentarios", "SegAsigTareas", new { id = item.id })</td>
-                        </tr>
-                    }
+                    <tr>
+                        <th scope="row" style="padding-left: 1.5vw;">@item.id</th>
+                        <td>@item.nombre</td>
+                        <td>@item.prioridad</td>
+                        <td><span class="estadoTabla">@item.progreso</span></td>
+                        <td>@Html.ActionLink("Detalles", "TareasYComentarios", "SegAsigTareas", new { id = item.id })</td>
+                    </tr>
                 }
             </tbody>
         </table>

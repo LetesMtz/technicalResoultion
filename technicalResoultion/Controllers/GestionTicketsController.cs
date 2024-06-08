@@ -21,7 +21,7 @@ namespace technicalResoultion.Controllers
             _configuration = configuration; 
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? ordenarPor, int? ordenDescAsc)
         {
             int id = 0;
             string tipo_usuario = "";
@@ -69,24 +69,214 @@ namespace technicalResoultion.Controllers
                 tipo_usuario = ViewBag.tipo_usuario;
             }
 
-            var tickets = (from t in _TechResContext.tickets
-                           join e in _TechResContext.estados
-                           on t.id_estado_prioridad equals e.id_estado
-                           join e2 in _TechResContext.estados
-                           on t.id_estado_progreso equals e2.id_estado
-                           join c in _TechResContext.categorias
-                           on t.id_categoria equals c.id_categoria
-                           where t.id_cliente == id && t.tipo_cliente == tipo_usuario
-                           select new
-                           {
-                               id = t.id_ticket,
-                               nombre = t.nombre_problema,
-                               prioridad = e.nombre,
-                               progreso = e2.nombre,
-                               categoria = c.categoria,
-                               fecha = t.fecha_creacion
-                           }).ToList();
-            ViewData["tickets"] = tickets;
+            if (ordenarPor > 0)
+            {
+                switch (ordenarPor)
+                {
+                    case 1:
+                        if (ordenDescAsc == 1)
+                        {
+                            var tickets = (from t in _TechResContext.tickets
+                                           join e in _TechResContext.estados
+                                           on t.id_estado_prioridad equals e.id_estado
+                                           join e2 in _TechResContext.estados
+                                           on t.id_estado_progreso equals e2.id_estado
+                                           join c in _TechResContext.categorias
+                                           on t.id_categoria equals c.id_categoria
+                                           where t.id_cliente == id && t.tipo_cliente == tipo_usuario
+                                           select new
+                                           {
+                                               id = t.id_ticket,
+                                               nombre = t.nombre_problema,
+                                               prioridad = e.nombre,
+                                               progreso = e2.nombre,
+                                               categoria = c.categoria,
+                                               fecha = t.fecha_creacion
+                                           }).ToList().OrderBy(x => x.id);
+                            ViewData["tickets"] = tickets;
+                        }
+                        else
+                        {
+                            var tickets = (from t in _TechResContext.tickets
+                                           join e in _TechResContext.estados
+                                           on t.id_estado_prioridad equals e.id_estado
+                                           join e2 in _TechResContext.estados
+                                           on t.id_estado_progreso equals e2.id_estado
+                                           join c in _TechResContext.categorias
+                                           on t.id_categoria equals c.id_categoria
+                                           where t.id_cliente == id && t.tipo_cliente == tipo_usuario
+                                           select new
+                                           {
+                                               id = t.id_ticket,
+                                               nombre = t.nombre_problema,
+                                               prioridad = e.nombre,
+                                               progreso = e2.nombre,
+                                               categoria = c.categoria,
+                                               fecha = t.fecha_creacion
+                                           }).ToList().OrderByDescending(x => x.id);
+                            ViewData["tickets"] = tickets;
+                        }
+                        break;
+                    case 2:
+                        if(ordenDescAsc == 1)
+                        {
+                            var tickets = (from t in _TechResContext.tickets
+                                           join e in _TechResContext.estados
+                                           on t.id_estado_prioridad equals e.id_estado
+                                           join e2 in _TechResContext.estados
+                                           on t.id_estado_progreso equals e2.id_estado
+                                           join c in _TechResContext.categorias
+                                           on t.id_categoria equals c.id_categoria
+                                           where t.id_cliente == id && t.tipo_cliente == tipo_usuario
+                                           select new
+                                           {
+                                               id = t.id_ticket,
+                                               nombre = t.nombre_problema,
+                                               prioridad = e.nombre,
+                                               progreso = e2.nombre,
+                                               categoria = c.categoria,
+                                               fecha = t.fecha_creacion
+                                           }).ToList().OrderBy(x => x.categoria);
+                            ViewData["tickets"] = tickets;
+                        }
+                        else
+                        {
+                            var tickets = (from t in _TechResContext.tickets
+                                           join e in _TechResContext.estados
+                                           on t.id_estado_prioridad equals e.id_estado
+                                           join e2 in _TechResContext.estados
+                                           on t.id_estado_progreso equals e2.id_estado
+                                           join c in _TechResContext.categorias
+                                           on t.id_categoria equals c.id_categoria
+                                           where t.id_cliente == id && t.tipo_cliente == tipo_usuario
+                                           select new
+                                           {
+                                               id = t.id_ticket,
+                                               nombre = t.nombre_problema,
+                                               prioridad = e.nombre,
+                                               progreso = e2.nombre,
+                                               categoria = c.categoria,
+                                               fecha = t.fecha_creacion
+                                           }).ToList().OrderByDescending(x => x.categoria);
+                            ViewData["tickets"] = tickets;
+                        }
+                        break;
+
+                    case 3:
+                        if (ordenDescAsc == 1)
+                        {
+                            var tickets = (from t in _TechResContext.tickets
+                                           join e in _TechResContext.estados
+                                           on t.id_estado_prioridad equals e.id_estado
+                                           join e2 in _TechResContext.estados
+                                           on t.id_estado_progreso equals e2.id_estado
+                                           join c in _TechResContext.categorias
+                                           on t.id_categoria equals c.id_categoria
+                                           where t.id_cliente == id && t.tipo_cliente == tipo_usuario
+                                           select new
+                                           {
+                                               id = t.id_ticket,
+                                               nombre = t.nombre_problema,
+                                               id_prioridad = t.id_estado_prioridad,
+                                               prioridad = e.nombre,
+                                               progreso = e2.nombre,
+                                               categoria = c.categoria,
+                                               fecha = t.fecha_creacion
+                                           }).ToList().OrderByDescending(x => x.id_prioridad);
+                            ViewData["tickets"] = tickets;
+                        }
+                        else
+                        {
+                            var tickets = (from t in _TechResContext.tickets
+                                           join e in _TechResContext.estados
+                                           on t.id_estado_prioridad equals e.id_estado
+                                           join e2 in _TechResContext.estados
+                                           on t.id_estado_progreso equals e2.id_estado
+                                           join c in _TechResContext.categorias
+                                           on t.id_categoria equals c.id_categoria
+                                           where t.id_cliente == id && t.tipo_cliente == tipo_usuario
+                                           select new
+                                           {
+                                               id = t.id_ticket,
+                                               nombre = t.nombre_problema,
+                                               id_prioridad = t.id_estado_prioridad,
+                                               prioridad = e.nombre,
+                                               progreso = e2.nombre,
+                                               categoria = c.categoria,
+                                               fecha = t.fecha_creacion
+                                           }).ToList().OrderBy(x => x.id_prioridad);
+                            ViewData["tickets"] = tickets;
+                        }
+                    break;
+                    case 4:
+                        if (ordenDescAsc == 1)
+                        {
+                            var tickets = (from t in _TechResContext.tickets
+                                           join e in _TechResContext.estados
+                                           on t.id_estado_prioridad equals e.id_estado
+                                           join e2 in _TechResContext.estados
+                                           on t.id_estado_progreso equals e2.id_estado
+                                           join c in _TechResContext.categorias
+                                           on t.id_categoria equals c.id_categoria
+                                           where t.id_cliente == id && t.tipo_cliente == tipo_usuario
+                                           select new
+                                           {
+                                               id = t.id_ticket,
+                                               nombre = t.nombre_problema,
+                                               prioridad = e.nombre,
+                                               id_progreso = t.id_estado_progreso,
+                                               progreso = e2.nombre,
+                                               categoria = c.categoria,
+                                               fecha = t.fecha_creacion
+                                           }).ToList().OrderBy(x => x.id_progreso);
+                            ViewData["tickets"] = tickets;
+                        }
+                        else
+                        {
+                            var tickets = (from t in _TechResContext.tickets
+                                           join e in _TechResContext.estados
+                                           on t.id_estado_prioridad equals e.id_estado
+                                           join e2 in _TechResContext.estados
+                                           on t.id_estado_progreso equals e2.id_estado
+                                           join c in _TechResContext.categorias
+                                           on t.id_categoria equals c.id_categoria
+                                           where t.id_cliente == id && t.tipo_cliente == tipo_usuario
+                                           select new
+                                           {
+                                               id = t.id_ticket,
+                                               nombre = t.nombre_problema,
+                                               prioridad = e.nombre,
+                                               id_progreso = t.id_estado_progreso,
+                                               progreso = e2.nombre,
+                                               categoria = c.categoria,
+                                               fecha = t.fecha_creacion
+                                           }).ToList().OrderBy(x => x.id_progreso);
+                            ViewData["tickets"] = tickets;
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                var tickets = (from t in _TechResContext.tickets
+                               join e in _TechResContext.estados
+                               on t.id_estado_prioridad equals e.id_estado
+                               join e2 in _TechResContext.estados
+                               on t.id_estado_progreso equals e2.id_estado
+                               join c in _TechResContext.categorias
+                               on t.id_categoria equals c.id_categoria
+                               where t.id_cliente == id && t.tipo_cliente == tipo_usuario
+                               select new
+                               {
+                                   id = t.id_ticket,
+                                   nombre = t.nombre_problema,
+                                   prioridad = e.nombre,
+                                   progreso = e2.nombre,
+                                   categoria = c.categoria,
+                                   fecha = t.fecha_creacion
+                               }).ToList();
+                ViewData["tickets"] = tickets;
+            }
 
             ViewBag.tipo_usuario = tipo_usuario;
 
@@ -211,10 +401,79 @@ namespace technicalResoultion.Controllers
             enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, se ha creado su ticket. \n \nNo. de seguimiento: " + ticket.id_ticket +
                 "\nProblema: " + ticket.nombre_problema + "\nDescripción: " + ticket.descripcion + ". \n \nEspere nuevos informes.");
 
-
-
-
             return RedirectToAction("Index");
         }
+
+        //public IActionResult BuscarTickets(string categoria)
+        //{
+        //    int id = 0;
+        //    string tipo_usuario = "";
+
+        //    var datosExternos = JsonSerializer.Deserialize<externos>(HttpContext.Session.GetString("usuario"));
+
+        //    if (datosExternos.nombres_e != null)
+        //    {
+        //        var cliente = (from c in _TechResContext.externos
+        //                       where c.nombres_e == datosExternos.nombres_e
+        //                       select new
+        //                       {
+        //                           id = c.id_externo,
+        //                           tipo_usuario = c.tipo_usuario
+        //                       }).ToList();
+
+        //        foreach (var item in cliente)
+        //        {
+        //            ViewBag.usuario = item.id;
+        //            ViewBag.tipo_usuario = item.tipo_usuario;
+        //        }
+
+        //        id = ViewBag.usuario;
+        //        tipo_usuario = ViewBag.tipo_usuario;
+        //    }
+        //    else
+        //    {
+        //        var datosInternos = JsonSerializer.Deserialize<internos>(HttpContext.Session.GetString("usuario"));
+
+        //        var cliente = (from c in _TechResContext.internos
+        //                       where c.nombres_i == datosInternos.nombres_i
+        //                       select new
+        //                       {
+        //                           id = c.id_interno,
+        //                           tipo_usuario = c.tipo_usuario
+        //                       }).ToList();
+
+        //        foreach (var item in cliente)
+        //        {
+        //            ViewBag.usuario = item.id;
+        //            ViewBag.tipo_usuario = item.tipo_usuario;
+        //        }
+
+        //        id = ViewBag.usuario;
+        //        tipo_usuario = ViewBag.tipo_usuario;
+        //    }
+
+        //    var tickets = (from t in _TechResContext.tickets
+        //                   join e in _TechResContext.estados
+        //                   on t.id_estado_prioridad equals e.id_estado
+        //                   join e2 in _TechResContext.estados
+        //                   on t.id_estado_progreso equals e2.id_estado
+        //                   join c in _TechResContext.categorias
+        //                   on t.id_categoria equals c.id_categoria
+        //                   where t.id_cliente == id && t.tipo_cliente == tipo_usuario
+        //                   select new
+        //                   {
+        //                       id = t.id_ticket,
+        //                       nombre = t.nombre_problema,
+        //                       prioridad = e.nombre,
+        //                       progreso = e2.nombre,
+        //                       categoria = c.categoria,
+        //                       fecha = t.fecha_creacion
+        //                   }).ToList();
+        //    ViewData["tickets"] = tickets;
+
+        //    ViewBag.tipo_usuario = tipo_usuario;
+
+        //    return RedirectToAction("Index");
+        //}
     }
 }

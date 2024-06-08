@@ -22,22 +22,86 @@ namespace technicalResoultion.Controllers
             _configuration = configuration;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? ordenarPor1, int? ordenDescAsc1, int? ordenarPor2, int? ordenDescAsc2)
         {
-            var tickets = (from t in _TechResContext.tickets
-                           join e in _TechResContext.estados
-                           on t.id_estado_prioridad equals e.id_estado
-                           join e2 in _TechResContext.estados
-                           on t.id_estado_progreso equals e2.id_estado
-                           select new
-                           {
-                               id = t.id_ticket,
-                               nombre = t.nombre_problema,
-                               prioridad = e.nombre,
-                               progreso = e2.nombre
-                           }).ToList();
+            if (ordenarPor1 > 0)
+            {
+                switch(ordenarPor1)
+                {
+                    case 1:
+                        if(ordenDescAsc1 == 1)
+                        {
+                            var ticketsProgreso = (from t in _TechResContext.tickets
+                                                   join e in _TechResContext.estados
+                                                   on t.id_estado_prioridad equals e.id_estado
+                                                   join e2 in _TechResContext.estados
+                                                   on t.id_estado_progreso equals e2.id_estado
+                                                   where e2.nombre == "En Progreso"
+                                                   select new
+                                                   {
+                                                       id = t.id_ticket,
+                                                       nombre = t.nombre_problema,
+                                                       prioridad = e.nombre,
+                                                       progreso = e2.nombre
+                                                   }).ToList().OrderBy(x => x.id);
 
-            ViewBag.Tickets = tickets;
+                            ViewBag.Tickets_progreso = ticketsProgreso;
+                        }
+                        else
+                        {
+                            var ticketsProgreso = (from t in _TechResContext.tickets
+                                                   join e in _TechResContext.estados
+                                                   on t.id_estado_prioridad equals e.id_estado
+                                                   join e2 in _TechResContext.estados
+                                                   on t.id_estado_progreso equals e2.id_estado
+                                                   where e2.nombre == "En Progreso"
+                                                   select new
+                                                   {
+                                                       id = t.id_ticket,
+                                                       nombre = t.nombre_problema,
+                                                       prioridad = e.nombre,
+                                                       progreso = e2.nombre
+                                                   }).ToList().OrderByDescending(x => x.id);
+
+                            ViewBag.Tickets_progreso = ticketsProgreso;
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                var ticketsProgreso = (from t in _TechResContext.tickets
+                                       join e in _TechResContext.estados
+                                       on t.id_estado_prioridad equals e.id_estado
+                                       join e2 in _TechResContext.estados
+                                       on t.id_estado_progreso equals e2.id_estado
+                                       where e2.nombre == "En Progreso"
+                                       select new
+                                       {
+                                           id = t.id_ticket,
+                                           nombre = t.nombre_problema,
+                                           prioridad = e.nombre,
+                                           progreso = e2.nombre
+                                       }).ToList();
+
+                ViewBag.Tickets_progreso = ticketsProgreso;
+            }
+
+            var ticketsEspera = (from t in _TechResContext.tickets
+                                   join e in _TechResContext.estados
+                                   on t.id_estado_prioridad equals e.id_estado
+                                   join e2 in _TechResContext.estados
+                                   on t.id_estado_progreso equals e2.id_estado
+                                   where e2.nombre == "En Espera"
+                                   select new
+                                   {
+                                       id = t.id_ticket,
+                                       nombre = t.nombre_problema,
+                                       prioridad = e.nombre,
+                                       progreso = e2.nombre
+                                   }).ToList();
+
+            ViewBag.Tickets_espera = ticketsEspera;
 
             return View();
         }
