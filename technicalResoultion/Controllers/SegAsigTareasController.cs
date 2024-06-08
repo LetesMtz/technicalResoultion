@@ -23,14 +23,14 @@ namespace technicalResoultion.Controllers
             _configuration = configuration;
         }
 
-        public IActionResult Index(int? ordenarPor1, int? ordenDescAsc1, int? ordenarPor2, int? ordenDescAsc2)
+        public IActionResult Index(int? ordenarPor, int? ordenDescAsc, int? ordenarPor2, int? ordenDescAsc2)
         {
-            if (ordenarPor1 > 0)
+            if (ordenarPor > 0)
             {
-                switch(ordenarPor1)
+                switch (ordenarPor)
                 {
                     case 1:
-                        if(ordenDescAsc1 == 1)
+                        if(ordenDescAsc  == 1)
                         {
                             var ticketsProgreso = (from t in _TechResContext.tickets
                                                    join e in _TechResContext.estados
