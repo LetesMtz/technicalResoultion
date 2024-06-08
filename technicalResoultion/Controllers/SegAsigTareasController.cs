@@ -6,6 +6,7 @@ using technicalResoultion.Models;
 using System.Text.Json;
 using Firebase.Auth;
 using Microsoft.EntityFrameworkCore;
+using technicalResoultion.Services;
 
 namespace technicalResoultion.Controllers
 {
