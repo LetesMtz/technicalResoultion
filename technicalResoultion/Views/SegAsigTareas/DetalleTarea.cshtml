@@ -7,24 +7,21 @@
 <form asp-action="ActualizarTarea" method="post">
     @foreach (var item in ViewBag.tarea)
     {
-        <input type="text" class="form-control" name="id_tarea" id="id_tarea" value="@item.id_tarea" readonly />
-        <input type="text" class="form-control" name="tarea" id="tarea" value="@item.tarea" readonly />
-        <input type="text" class="form-control" name="id_ticket" id="id_ticket" value="@item.id_ticket" readonly />
+        <input type="hidden" name="id_tarea" value="@item.id_tarea" />
+        <input type="hidden" name="id_interno" value="@item.id_interno" />
 
-        <select class="form-control" name="id_estado_progreso" id="id_estado_progreso">
-            <option value="@item.id_progreso" selected>@item.progreso</option>
-            @foreach (var item2 in ViewBag.id_progreso)
+        <input type="text" class="form-control" name="tarea" value="@item.tarea" />
+        <input type="text" class="form-control" name="id_ticket" value="@item.id_ticket" readonly />
+
+        <select class="form-control" name="id_estado_progreso">
+            @for (int i = 1; i < ViewBag.id_progreso.Count; i++)
             {
-                @if(item2.nombre != "En Espera")
-                {
-                    <option value="@item2.id_estado">@item2.nombre</option>
-                }
+                var item2 = ViewBag.id_progreso[i];
+                <option value="@item2.id_estado">@item2.nombre</option>
             }
         </select>
 
-        <input type="hidden" name="id_interno" id="id_interno" value="@item.id_interno" />
-
-        <input type="text" class="form-control" name="nombres_i" id="nombres_i" value="@item.nombres_i @item.apellidos_i" readonly  />
+        <input type="text" class="form-control" name="nombres_i" value="@item.nombres_i @item.apellidos_i" readonly />
     }
 
     <input type="submit" class="btn btn-primary" value="Actualizar" />

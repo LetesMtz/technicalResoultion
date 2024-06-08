@@ -1,21 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using technicalResoultion.Models;
+using technicalResoultion.Services;
 
 namespace technicalResoultion.Controllers
 {
     public class externosController : Controller
     {
         private readonly TechResContext _context;
+        private IConfiguration _configuration;
 
-        public externosController(TechResContext context)
+        private bool estaRegistrado = false;
+
+        public externosController(TechResContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -23,6 +29,7 @@ namespace technicalResoultion.Controllers
             var externos = _context.externos.ToList();
             ViewData["externos"] = externos;
             return View();
+
         }
 
         // Acción para mostrar la vista de registro
@@ -77,11 +84,17 @@ namespace technicalResoultion.Controllers
 
         public IActionResult Edit(int id)
         {
+
             var externo = _context.externos.Find(id);
             if (externo == null)
             {
                 return NotFound();
             }
+
+            //Primero revisamos que efectivamente no haya sido registrado
+            estaRegistrado = !string.IsNullOrEmpty(externo.correo_login);
+
+
             return View(externo);
         }
 
@@ -98,8 +111,28 @@ namespace technicalResoultion.Controllers
             {
                 try
                 {
+                    
+
+
+
                     _context.Update(externo);
                     await _context.SaveChangesAsync();
+
+                    //Correo
+                    if (!estaRegistrado)
+                    {
+                        correo enviarCorreo = new correo(_configuration);
+
+                        string correoParaEnviar = string.IsNullOrEmpty(externo.correo_login) ? externo.correo_e : externo.correo_login;
+
+                        enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: USUARIO REGISTRADO",
+                            "Estimado, " + externo.nombres_e + ", ¡Bienvenido a nuestro sistema de tickets! \n \n" +
+                            "Estas son sus credenciales para ingresar a nuestro sitio. \n \nCorreo asignado: " + externo.correo_login +
+                            "\nContraseña: " + externo.contrasena_e + "\n \nSerá un gusto atenderle.");
+                    }
+
+
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {

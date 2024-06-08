@@ -7,6 +7,7 @@ using System.Text.Json;
 using Firebase.Auth;
 using Microsoft.EntityFrameworkCore;
 using technicalResoultion.Services;
+using System.Linq;
 
 namespace technicalResoultion.Controllers
 {
@@ -142,11 +143,10 @@ namespace technicalResoultion.Controllers
 
         public IActionResult CreateTarea(int id_ticket, string tare_area)
         {
-
-            
-
             string[] tareasAsignadas = tare_area.TrimEnd(';').Split(';');
             string[][] tareaEncargado = new string[tareasAsignadas.Length][];
+
+            correo enviarCorreoEmpleado = new correo(_configuration);
 
             for (int i = 0; i < tareasAsignadas.Length; i++)
             {
@@ -162,31 +162,41 @@ namespace technicalResoultion.Controllers
 
                 _TechResContext.asignar_tareas.Add(tareas);
                 _TechResContext.SaveChanges();
+
+                // Enviar correo al empleado
+                var correoEmpleado = (from e in _TechResContext.internos
+                                      join t in _TechResContext.asignar_tareas on e.id_interno equals t.id_interno
+                                      where t.id_tarea == tareas.id_tarea
+                                      select e.correo_i).FirstOrDefault();  // Selecciona el primer correo encontrado
+
+                if (correoEmpleado != null)
+                {
+                    enviarCorreoEmpleado.enviar(correoEmpleado, "TECHNICAL RESOLUTION: TAREA ASIGNADA", "Se te ha asignado una tarea. \nTicket: " + id_ticket + " \nTarea: " + tareas.tarea);
+                }
             }
 
-
             var usuarioExterno = (from t in _TechResContext.tickets
-                                  join e in _TechResContext.externos
-                                  on t.id_cliente equals e.id_externo
-                                  join es in _TechResContext.estados
-                                  on t.id_estado_progreso equals es.id_estado
+                                  join e in _TechResContext.externos on t.id_cliente equals e.id_externo
+                                  join es in _TechResContext.estados on t.id_estado_progreso equals es.id_estado
                                   where t.id_ticket == id_ticket
                                   select new
                                   {
                                       id = t.id_ticket,
                                       correo = e.correo_login,
                                       estado = es.nombre
-                                  }).ToList();
+                                  }).FirstOrDefault();
 
-            correo enviarCorreo = new correo(_configuration);
+            if (usuarioExterno != null)
+            {
+                correo enviarCorreo = new correo(_configuration);
+                string correoParaEnviar = usuarioExterno.correo;
 
-            string correoParaEnviar = usuarioExterno[0].correo; //GUARDAR CORREO DEL QUE INICIÓ SESIÓN
-
-            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, ha habido una actualización en su ticket.\n \nNo. de seguimiento:  "+ id_ticket +" \nEstado de su ticket: " + usuarioExterno[0].estado);
-
+                enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, ha habido una actualización en su ticket.\n \nNo. de seguimiento: " + id_ticket + " \nEstado de su ticket: " + usuarioExterno.estado);
+            }
 
             return RedirectToAction("AsignarTarea");
         }
+
 
         public IActionResult TareasYComentarios(int id)
         {
@@ -267,15 +277,10 @@ namespace technicalResoultion.Controllers
         }
 
         public async Task<IActionResult> CerrarTicket(int? id, [Bind("id_ticket, id_categoria, nombre_problema, descripcion, archivos, fecha_creacion," +
-            "fecha_ult_mod, id_estado_prioridad, id_estado_progreso, id_cliente, tipo_cliente")] tickets ticket)
+    "fecha_ult_mod, id_estado_prioridad, id_estado_progreso, id_cliente, tipo_cliente")] tickets ticket)
         {
             _TechResContext.Update(ticket);
             await _TechResContext.SaveChangesAsync();
-
-
-
-
-
 
             //AQUÍ VA LA PARTE DE ENVÍO DE CORREO
             correo enviarCorreo = new correo(_configuration);
@@ -288,6 +293,7 @@ namespace technicalResoultion.Controllers
 
             return RedirectToAction("Index");
         }
+
 
         public IActionResult DetalleTarea(int id)
         {
@@ -320,12 +326,42 @@ namespace technicalResoultion.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ActualizarTarea(int? id, [Bind("id_tarea, id_ticket, tarea, id_estado_progreso, id_interno")] asignar_tareas tarea)
+        public IActionResult ActualizarTarea(int id_tarea, int id_ticket, string tarea, int id_estado_progreso, int id_interno)
         {
-            _TechResContext.Update(tarea);
-            await _TechResContext.SaveChangesAsync();
+                var tareaActualizar = _TechResContext.asignar_tareas.FirstOrDefault(at => at.id_tarea == id_tarea);
 
-            return RedirectToAction("Index");
+                    tareaActualizar.id_ticket = id_ticket;
+                    tareaActualizar.tarea = tarea;
+                    tareaActualizar.id_estado_progreso = id_estado_progreso;
+                    tareaActualizar.id_interno = id_interno;
+
+                    // Guardar los cambios en la base de datos
+                    _TechResContext.SaveChanges();
+
+            //AQUÍ VA LA PARTE DE ENVÍO DE CORREO
+            correo enviarCorreo = new correo(_configuration);
+
+            var datosUsuario = JsonSerializer.Deserialize<externos>(HttpContext.Session.GetString("usuario"));
+            string correoParaEnviar = datosUsuario.correo_e; //GUARDAR CORREO DEL QUE INICIÓ SESIÓN
+
+            var estadoTarea = from t in _TechResContext.asignar_tareas
+                              join e in _TechResContext.estados on t.id_estado_progreso equals e.id_estado
+                              where t.id_tarea == tareaActualizar.id_tarea
+                              select e.nombre;
+
+
+            enviarCorreo.enviar(correoParaEnviar, "TECHNICAL RESOLUTION: INFORMES", "Estimado usuario, ha habido una actualización en su ticket.\n \nNo. de seguimiento:  " + tareaActualizar.id_ticket + " \nEstado de su ticket: " +
+                "En progreso \n \nTarea actual: " + tareaActualizar.tarea + "\nEstado de tarea: " + estadoTarea + ".");
+
+
+
+
+
+            // Redireccionar a la acción DetalleTarea con el ID de la tarea
+            return RedirectToAction("Index", new { id = id_tarea });
+
         }
+
+
     }
 }
