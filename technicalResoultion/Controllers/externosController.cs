@@ -25,6 +25,26 @@ namespace technicalResoultion.Controllers
             return View();
         }
 
+        // Acción para mostrar la vista de registro
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        // Acción para manejar el registro de un nuevo usuario externo
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(externos externo)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(externo);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Tu información ha sido registrada. En unos momentos nos comunicaremos contigo.";
+                return RedirectToAction("Index", "Login");
+            }
+            return View(externo);
+        }
         public IActionResult Details(int id)
         {
             var externo = _context.externos.Find(id);

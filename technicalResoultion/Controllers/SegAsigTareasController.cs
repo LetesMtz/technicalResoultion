@@ -224,5 +224,44 @@ namespace technicalResoultion.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult DetalleTarea(int id)
+        {
+            var tarea = (from at in _TechResContext.asignar_tareas
+                         join i in _TechResContext.internos
+                         on at.id_interno equals i.id_interno
+                         join e in _TechResContext.estados
+                         on at.id_estado_progreso equals e.id_estado
+                         where at.id_tarea == id
+                         select new
+                         {
+                             id_tarea = at.id_tarea,
+                             id_ticket = at.id_ticket,
+                             tarea = at.tarea,
+                             id_progreso = at.id_estado_progreso,
+                             progreso = e.nombre,
+                             nombres_i = i.nombres_i,
+                             apellidos_i = i.apellidos_i,
+                             id_interno = at.id_interno
+                         }).ToList();
+
+            ViewBag.tarea = tarea;
+
+            var progreso = (from e in _TechResContext.estados
+                            where e.tipo_estado == "Progreso"
+                            select e).ToList();
+
+            ViewBag.id_progreso = progreso;
+
+            return View();
+        }
+
+        public async Task<IActionResult> ActualizarTarea(int? id, [Bind("id_tarea, id_ticket, tarea, id_estado_progreso, id_interno")] asignar_tareas tarea)
+        {
+            _TechResContext.Update(tarea);
+            await _TechResContext.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
     }
 }
